@@ -1,0 +1,25 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<img src="/new_tower_logo.png" width="20%" style="margin-bottom: 2rem; display: block; margin-left: auto; margin-right: auto;">
+			<h1><img src="/writing_linear_white.png"></h1>
+			<hr style="border: 0; border-top: 1px solid lightgrey; margin: 2rem 0;">
+			<p>
+				Tower of Hanoi is 
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>
