@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-dxom2xcl> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.16.18"><!-- Font preloads --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://localhost:3000/writeups/2018-04-15-ribbons/"><!-- Primary Meta Tags --><title>RuCTF Finals 2018 - Ribbons</title><meta name="title" content="RuCTF Finals 2018 - Ribbons"><meta name="description" content="Leaking messages from a chat through heap-overflow"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://localhost:3000/writeups/2018-04-15-ribbons/"><meta property="og:title" content="RuCTF Finals 2018 - Ribbons"><meta property="og:description" content="Leaking messages from a chat through heap-overflow"><meta property="og:image" content="https://localhost:3000/blog-placeholder-1.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://localhost:3000/writeups/2018-04-15-ribbons/"><meta property="twitter:title" content="RuCTF Finals 2018 - Ribbons"><meta property="twitter:description" content="Leaking messages from a chat through heap-overflow"><meta property="twitter:image" content="https://localhost:3000/blog-placeholder-1.jpg"><style>:root{--accent: #fea819;--accent-dark: #ac7010}@font-face{font-family:Atkinson;src:url(/fonts/atkinson-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:Atkinson;src:url(/fonts/atkinson-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}body{font-family:Atkinson,sans-serif;margin:0;padding:0;text-align:left;background:#171717 no-repeat;background-size:100% 600px;word-wrap:break-word;overflow-wrap:break-word;color:#aaa;font-size:20px;line-height:1.7}main{width:720px;max-width:calc(100% - 2em);margin:auto;padding:3em 1em}h1,h2,h3,h4,h5,h6{margin:0 0 .5rem;color:#fff;line-height:1.2}h1{font-size:3.052em}h2{font-size:2.441em}h3{font-size:1.953em}h4{font-size:1.563em}h5{font-size:1.25em}strong,b{font-weight:700}a,a:hover{color:var(--accent)}p{margin-bottom:1em}.prose p{margin-bottom:2em}textarea{width:100%;font-size:16px}input{font-size:16px}table{width:100%}img{max-width:100%;height:auto;border-radius:8px}code{padding:2px 5px;background-color:#1f1f1f;border-radius:2px}pre{padding:1.5em;border-radius:8px}pre>code{all:unset;font-size:.9em}blockquote{border-left:4px solid var(--accent);padding:0 0 0 20px;margin:0;font-size:1.333em}hr{border:none;border-top:1px solid #e9e9e9}@media (max-width: 720px){body{font-size:18px}main{padding:1em}}.sr-only{border:0;padding:0;margin:0;position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);clip-path:inset(50%);white-space:nowrap}a[data-astro-cid-eimmu3lg]{display:inline-block;text-decoration:none}a[data-astro-cid-eimmu3lg].active{font-weight:bolder;text-decoration:underline}header[data-astro-cid-3ef6ksr2]{margin:0;padding:0 1em;background:#1f1f1f;box-shadow:0 2px 8px rgba(var(--black),5%)}h2[data-astro-cid-3ef6ksr2]{margin:0;font-size:1em}h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2],h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none}nav[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:space-between}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{padding:1em .5em;color:var(--black);border-bottom:4px solid transparent;text-decoration:none}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none;border-bottom-color:var(--accent)}.social-links[data-astro-cid-3ef6ksr2],.social-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{display:flex}@media (max-width: 720px){.social-links[data-astro-cid-3ef6ksr2]{display:none}}footer[data-astro-cid-sz7xmlte]{padding:2em 1em 6em;background:linear-gradient(var(--gray-gradient)) no-repeat;color:rgb(var(--gray));text-align:center}.social-links[data-astro-cid-sz7xmlte]{display:flex;justify-content:center;gap:1em;margin-top:1em}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]{text-decoration:none;color:rgb(var(--gray))}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]:hover{color:rgb(var(--gray-dark))}
+main[data-astro-cid-dxom2xcl]{width:calc(100% - 2em);max-width:100%;margin:0}.hero-image[data-astro-cid-dxom2xcl]{width:100%}.hero-image[data-astro-cid-dxom2xcl] img[data-astro-cid-dxom2xcl]{display:block;margin:0 auto;border-radius:12px;box-shadow:var(--box-shadow)}.prose[data-astro-cid-dxom2xcl]{width:75%;max-width:calc(100% - 2em);margin:auto;padding:1em;color:rgb(var(--gray-dark))}.title[data-astro-cid-dxom2xcl]{margin-bottom:1em;padding:1em 0;text-align:center;line-height:1}.title[data-astro-cid-dxom2xcl] h1[data-astro-cid-dxom2xcl]{margin:0 0 .5em}.date[data-astro-cid-dxom2xcl]{margin-bottom:.5em;color:rgb(var(--gray))}.last-updated-on[data-astro-cid-dxom2xcl]{font-style:italic}
+</style></head> <body data-astro-cid-dxom2xcl> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <a href="/" style="padding: 1rem 0 0 0;" data-astro-cid-3ef6ksr2> <img src="/new_tower_logo.png" alt="Tower of Hanoi Logo" width="50rem" height="50rem" style="border-radius: 0;" data-astro-cid-3ef6ksr2> </a> <div class="internal-links" data-astro-cid-3ef6ksr2> <a href="/" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Home </a>  <a href="/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Blogposts </a>  <a href="/writeups" class="active" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Writeups </a>  <a href="/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> About </a>  </div> <div class="social-links" data-astro-cid-3ef6ksr2> <a href="https://x.com/towerofhanoi" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Follow Tower of Hanoi on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-3ef6ksr2></path></svg> </a> <a href="https://github.com/towerofhanoi" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to Tower of Hanoi's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path></svg> </a> <a href="https://ctftime.org/team/300" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to Tower of Hanoi's CTF Time page</span> <svg viewBox="0 0 16 16" width="32" height="32" data-astro-cid-3ef6ksr2> <path fill="currentColor" d="M 0,0 H 16 V 16 H 0 L 4.7205698,7.7838485 Z" data-astro-cid-3ef6ksr2></path> </svg> </a> </div> </nav> </header>  <main data-astro-cid-dxom2xcl> <article data-astro-cid-dxom2xcl> <div class="hero-image" data-astro-cid-dxom2xcl> <img width="720" height="360" src="/writeup_images/ru2018.png" alt="" data-astro-cid-dxom2xcl> </div> <div class="prose" data-astro-cid-dxom2xcl> <div class="title" data-astro-cid-dxom2xcl> <div class="date" data-astro-cid-dxom2xcl> <time datetime="2018-04-22T22:00:00.000Z"> Apr 23, 2018 </time>  </div> <h1 data-astro-cid-dxom2xcl>RuCTF Finals 2018 - Ribbons</h1> <h3 data-astro-cid-dxom2xcl> by Armando &quot;Ikigai&quot; Bellante</h3> <hr data-astro-cid-dxom2xcl> </div>  <h1 id="ribbons">Ribbons</h1>
+<p>We came across this challenge while playing RuCTF Finals 2018 in Ekaterinburg. I really enjoyed the CTF and this challenge in particular!<br>
+I had a look at this service with my friend, and teammate, <em>marcof</em> who helped me a lot brainstorming for the exploit and figuring out how to interact with the service.</p>
+<p><img src="/writeup_files/ribbons/images/ribbons.png" alt="alt text"></p>
+<p>This challenge was about an online chat/forum written in C.<br>
+You can find all the files of the challenge in <a href="https://github.com/Ikiga1/writeups/tree/master/RuCTF2018/ribbons">my GitHub</a>.<br>
+Every channel had a key: posts were encrypted and the only way you can get the key is by invitation or by beeing the owner of the channel (aka knowing id and password of the channel).<br>
+Our goal was to retrieve the posts the bot was writing in channels he owned.<br>
+And, so sadly, we got no invitations… :(</p>
+<h2 id="interaction-and-reversing">Interaction and Reversing</h2>
+<p>We were given a <strong>data</strong> folder, a <strong>static</strong> folder and an ELF 64-bit executable, called <strong>ribbons</strong>.
+I immediately started by having a glance at how the site looked like and I tried to interact a bit!</p>
+<h4 id="interaction">Interaction</h4>
+<p>It seems like it’s possible to create a channel, write messages in it and use an invitation to view someone else’s channel.<br>
+Inside the <strong>static</strong> folder, in the <a href="/writeup_files/ribbons/index.js">index.js</a> file we find what requests can be made to the service.<br>
+Here’s a brief description of the the requests I was particularly interested in:</p>
+<ul>
+<li><code>add_channel(name, password)</code> adds a channel and returns an Id which identifies the channel.</li>
+<li><code>add_post(channel_id, password, text)</code> adds a message to the channel you created.</li>
+<li><code>get_key(channel_id, password)</code> gives you the key associated with your channel (the key is used to decrypt posts in the channel).</li>
+<li><code>change_password(channel_id, password, new_password)</code> allows you to change your channel’s password.</li>
+<li><code>view(channel_id)</code> retrieves a channel and its posts.</li>
+</ul>
+<p>I didn’t know whether the flag would have been stored in the password field or in the posts…<br>
+Very soon I discover the bot adds a channel and stores the flag in a post.
+Our goal seems to read the messages in the bot’s channels without an invitation!</p>
+<h4 id="structs">Structs</h4>
+<p>Let’s open IDA Pro and reverse some stuff!<br>
+There are a bunch of functions that handle requests, responses and daemons, but I want to focus on what a channel is.<br>
+By searching for functions that interacts with the files stored in <strong>data</strong> I realize that channels are represented in memory using a structure as follow:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span style="color:#CB7676">struct</span><span style="color:#DBD7CAEE"> channel</span><span style="color:#666666">{</span></span>
+<span class="line"><span style="color:#CB7676">	int</span><span style="color:#DBD7CAEE"> chan_id</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#CB7676">	char</span><span style="color:#BD976A"> name</span><span style="color:#666666">[</span><span style="color:#4C9A91">20</span><span style="color:#666666">];</span></span>
+<span class="line"><span style="color:#CB7676">	char</span><span style="color:#BD976A"> password</span><span style="color:#666666">[</span><span style="color:#4C9A91">16</span><span style="color:#666666">];</span></span>
+<span class="line"><span style="color:#CB7676">	char</span><span style="color:#CB7676"> *</span><span style="color:#DBD7CAEE"> key</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#DBD7CAEE">	messages </span><span style="color:#CB7676">*</span><span style="color:#DBD7CAEE"> messages</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#666666">};</span></span>
+<span class="line"></span></code></pre>
+<p>Files are written and read in binary: their name is the Channel Id and they contain the name of the channel, its password, key and encrypted messages.
+Keys are 128 Bytes long.</p>
+<p><img src="/writeup_files/ribbons/images/read_channel.png" alt="alt text"></p>
+<p>Although it’s not relevant to the exploit, here’s the structure of the posts and how they are loaded in memory.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span style="color:#CB7676">struct</span><span style="color:#DBD7CAEE"> messages</span><span style="color:#666666">{</span></span>
+<span class="line"><span style="color:#CB7676">	char</span><span style="color:#CB7676"> *</span><span style="color:#DBD7CAEE"> data</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#DBD7CAEE">	__int64 size</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#DBD7CAEE">	message </span><span style="color:#CB7676">*</span><span style="color:#DBD7CAEE"> next</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#666666">};</span></span>
+<span class="line"></span></code></pre>
+<p><img src="/writeup_files/ribbons/images/create_message.png" alt="alt text"></p>
+<h4 id="vulnerability">Vulnerability</h4>
+<p>It’s time to find a bug!</p>
+<p>I started searching for functions related to the requests.<br>
+Inside the bss section we can find pointers to functions that are used to accomplish what the requests ask for.
+After reversing most of them, there seems to be an overflow in the <code>change_password()</code> method.<br>
+In fact, once the check over the old password is completed, a <code>memcpy()</code> of size <code>strlen()</code> of the new password is performed on the <code>channel->password</code> field.<br>
+<img src="/writeup_files/ribbons/images/change_password.png" alt="alt text"></p>
+<p>If I try to change password using the web interface, javascript stops me.
+<img src="/writeup_files/ribbons/images/change_password_web.png" alt="alt text"><br>
+But if we have a look at how the request is processed by the service we notice it takes 0x14 (aka 20) Bytes from the password field instead of 0x10!<br>
+<img src="/writeup_files/ribbons/images/process_request.png" alt="alt text"></p>
+<p>It seems like it’s possible to overwrite some bytes of the key address!</p>
+<h2 id="patch">Patch</h2>
+<p>I suddenly tought that the obvious way to patch the binary was to fix the <code>memcpy()</code> size to 0x10.<br>
+That way attackers couldn’t overwrite any byte other than the password’s ones.</p>
+<p>So I had a look at the function’s disassembly
+<img src="/writeup_files/ribbons/images/bug_asm.png" alt="alt text"></p>
+<p>and I changed the assembly that way, being careful not to mess up with instruction’s sizes:</p>
+<p><img src="/writeup_files/ribbons/images/fix_asm.png" alt="alt text"></p>
+<p>That’s how the patch looks like in pseudocode.
+<img src="/writeup_files/ribbons/images/fix_pseudocode.png" alt="alt text"></p>
+<h2 id="exploitation">Exploitation</h2>
+<p>Since it’s possible to create a channel and ask back for its key… and since channels are stored in the heap…<br>
+It’s possible to dump a great piece of heap 128 Bytes at a time!</p>
+<h4 id="wow-theres-a-leak">Wow, there’s a Leak!</h4>
+<p>We can create a channel and change our own channel’s password to overwrite the <code>key</code> pointer.<br>
+This way, changing only the last bytes, we have valid a pointer to the heap.<br>
+In order to leak memory, we can:</p>
+<ul>
+<li>Create a new channel.</li>
+<li>Change password and overflow into the pointer.</li>
+<li>Ask for our channel’s key, reading 128B from the heap.</li>
+<li>Change password again and leak other chunks of memory.</li>
+</ul>
+<h3 id="but-what-can-we-do-with-our-leak">But, what can we do with our leak?</h3>
+<p>At the beginning we had several ideas, but…<br>
+There are a few problems that should be taken into consideration:</p>
+<ul>
+<li><code>strlen()</code> stops when <strong>\0</strong> is found, that means no 0s in the “password payload”.</li>
+<li>We have to read the memory carefully, 128B at a time.</li>
+<li>Channels are stored on files, sometimes they are freed on the heap: when they are freed we lose both their key and id (id gets overwritten by heap pointers, key and messagess are freed).</li>
+<li>What should we search for?</li>
+<li>Retrieving a key without a Channel id means we need to bruteforce ids and try to decrypt messages and find valid flags.</li>
+<li>How do we recognize data?</li>
+</ul>
+<h4 id="the-final-idea">The final idea</h4>
+<p>After a (not so short) while I realized what I wanted to do and what I was searching for.<br>
+The idea was to:</p>
+<ul>
+<li>Search for “in use” channels.</li>
+<li>Find Id and password of each one.</li>
+<li>Ask for their key.</li>
+<li>Ask for their posts.</li>
+<li>Decrypt them by using the algorithm that can be found both in <a href="/writeup_files/ribbons/index.js">index.js</a> or in the binary.</li>
+</ul>
+<h4 id="overcoming-problems">Overcoming problems</h4>
+<p>To overcome those problems I mentioned above I’ve found the following solutions:</p>
+<ul>
+<li>
+<p>To defeat <code>strlen()</code> it is possible to read the heap in steps of 128, aligning memory to the 8th Byte thus avoiding writing 0s.</p>
+</li>
+<li>
+<p>Channel ids are incremental: if I want to be sure there will be new channels (we want new flags!) in memory when I search for them, I can ask with <code>view</code> the last X channels from <code>My_channel_id - 1</code> to <code>My_channel_id - X</code>.</p>
+</li>
+<li>
+<p>Since I want to search for channels, I need to recognize them.
+The size of an allocated channel is <strong>0x45</strong>:<br>
+I can search inside those 128B of leak, other mini-chunks of 8 Bytes that are equal to 0x45.</p>
+</li>
+</ul>
+<p>In fact, the size of a channel is <code>20+4+16+8+8 = 56</code>. That means malloc will allocate a chunk of size <code>64 = 0x40</code> and will set the last 3 bits as 101:</p>
+<ul>
+<li>1: Chunk not allocated in main arena, each thread that spawns has its own arena.</li>
+<li>0: Chunk is not obtained through <code>mmap()</code>.</li>
+<li>1: Prev in Use bit means that the chunk above is allocated (ok, if you see the exploit I could be watching a freed chunk… but the exploit returned enough channel and posts, I assumed my <code>view()</code>s helped me having all the new chunks near to each other)</li>
+</ul>
+<p>Just remember the struct of a m-allocated chunk is as follows:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>    chunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span>
+<span class="line"><span>            |             Size of previous chunk, if unallocated (P clear)  |</span></span>
+<span class="line"><span>            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span>
+<span class="line"><span>            |             Size of chunk, in bytes                     |A|M|P|</span></span>
+<span class="line"><span>      mem-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span>
+<span class="line"><span>            |             User data starts here...                          .</span></span>
+<span class="line"><span>            .                                                               .</span></span>
+<span class="line"><span>            .             (malloc_usable_size() bytes)                      .</span></span>
+<span class="line"><span>            .                                                               |</span></span>
+<span class="line"><span>nextchunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span>
+<span class="line"><span>            |             (size of chunk, but used for application data)    |</span></span>
+<span class="line"><span>            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span>
+<span class="line"><span>            |             Size of next chunk, in bytes                |A|0|1|</span></span>
+<span class="line"><span>            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>(You can find more explanations <a href="https://heap-exploitation.dhavalkapil.com/diving_into_glibc_heap/malloc_chunk.html">here</a>)</p>
+<p>So, here’s how the chunks I’m searching for look like:
+<img src="/writeup_files/ribbons/images/legenda.png" alt="alt text">
+<img src="/writeup_files/ribbons/images/channel_dump.png" alt="alt text"></p>
+<p>Now I know when I’m watching a channel structure and I can find ids and passwords!</p>
+<h4 id="implementation">Implementation</h4>
+<p>ou can find my exploit here <a href="/writeup_files/ribbons/exploit.py">exploit.py</a>.
+It could certainly be improved, but it worked and that’s how I wrote it during the competition (and the flight). I wanted to keep it like that, so I just rearranged the code a bit and added some comments :)</p>
+<p>I suggest you running <a href="/writeup_files/ribbons/bot.py">bot.py</a> one or two times to create some channels, then I would restart the service and run the exploit.</p>
+<h2 id="curiosities-and-extras">Curiosities and Extras</h2>
+<p>This challenge has been a good Reverse Engineering exercice :P<br>
+However, the process I went through while reversing it was not as linear as the one I tried to describe above.<br>
+Unfortunately we had problems with tools and routers during the game so we didn’t manage to write the exploit during the competition…<br>
+Also, we were too tired and had stupid problems while scripting the solution.</p>
+<p>Just about 30 min before the game ended we were able to see other channels’ passwords, but it was too late to finish the attack.<br>
+I finished the exploit duringh the flight on my way back, just for fun.<br>
+In any way I was happy I realized very soon how the challenge worked and patched the binary before Bushwhackers began to attack! (Damn, I forgot to build the container and we lost 2 flags… lol)<br>
+Hope you enjoyed the write-up!</p>
+<p>Kudos to the Bushwhackers who did a real good job on that challenge during the competition, beeing the only team who exploited the service! :)</p>  </div> </article> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2024 Tower of Hanoi. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://twitter.com/towerofhanoi" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Follow Tower of Hanoi on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/twitter" data-astro-cid-sz7xmlte><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://github.com/towerofhanoi" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Tower of Haoi's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://ctftime.org/team/300" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Tower of Hanoi's CTF Time page</span> <svg viewBox="0 0 16 16" width="32" height="32" data-astro-cid-sz7xmlte> <path fill="currentColor" d="M 0,0 H 16 V 16 H 0 L 4.7205698,7.7838485 Z" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </footer>  </body></html>
