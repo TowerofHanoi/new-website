@@ -1,0 +1,412 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-dxom2xcl> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.16.18"><!-- Font preloads --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://localhost:3000/writeups/2017-07-08-pasticciotto/"><!-- Primary Meta Tags --><title>PoliCTF 17 - Pasticciotto</title><meta name="title" content="PoliCTF 17 - Pasticciotto"><meta name="description" content="Salentian Polymorphic VM"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://localhost:3000/writeups/2017-07-08-pasticciotto/"><meta property="og:title" content="PoliCTF 17 - Pasticciotto"><meta property="og:description" content="Salentian Polymorphic VM"><meta property="og:image" content="https://localhost:3000/blog-placeholder-1.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://localhost:3000/writeups/2017-07-08-pasticciotto/"><meta property="twitter:title" content="PoliCTF 17 - Pasticciotto"><meta property="twitter:description" content="Salentian Polymorphic VM"><meta property="twitter:image" content="https://localhost:3000/blog-placeholder-1.jpg"><style>:root{--accent: #fea819;--accent-dark: #ac7010}@font-face{font-family:Atkinson;src:url(/fonts/atkinson-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:Atkinson;src:url(/fonts/atkinson-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}body{font-family:Atkinson,sans-serif;margin:0;padding:0;text-align:left;background:#171717 no-repeat;background-size:100% 600px;word-wrap:break-word;overflow-wrap:break-word;color:#aaa;font-size:20px;line-height:1.7}main{width:720px;max-width:calc(100% - 2em);margin:auto;padding:3em 1em}h1,h2,h3,h4,h5,h6{margin:0 0 .5rem;color:#fff;line-height:1.2}h1{font-size:3.052em}h2{font-size:2.441em}h3{font-size:1.953em}h4{font-size:1.563em}h5{font-size:1.25em}strong,b{font-weight:700}a,a:hover{color:var(--accent)}p{margin-bottom:1em}.prose p{margin-bottom:2em}textarea{width:100%;font-size:16px}input{font-size:16px}table{width:100%}img{max-width:100%;height:auto;border-radius:8px}code{padding:2px 5px;background-color:#1f1f1f;border-radius:2px}pre{padding:1.5em;border-radius:8px}pre>code{all:unset;font-size:.9em}blockquote{border-left:4px solid var(--accent);padding:0 0 0 20px;margin:0;font-size:1.333em}hr{border:none;border-top:1px solid #e9e9e9}@media (max-width: 720px){body{font-size:18px}main{padding:1em}}.sr-only{border:0;padding:0;margin:0;position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);clip-path:inset(50%);white-space:nowrap}a[data-astro-cid-eimmu3lg]{display:inline-block;text-decoration:none}a[data-astro-cid-eimmu3lg].active{font-weight:bolder;text-decoration:underline}header[data-astro-cid-3ef6ksr2]{margin:0;padding:0 1em;background:#1f1f1f;box-shadow:0 2px 8px rgba(var(--black),5%)}h2[data-astro-cid-3ef6ksr2]{margin:0;font-size:1em}h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2],h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none}nav[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:space-between}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{padding:1em .5em;color:var(--black);border-bottom:4px solid transparent;text-decoration:none}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none;border-bottom-color:var(--accent)}.social-links[data-astro-cid-3ef6ksr2],.social-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{display:flex}@media (max-width: 720px){.social-links[data-astro-cid-3ef6ksr2]{display:none}}footer[data-astro-cid-sz7xmlte]{padding:2em 1em 6em;background:linear-gradient(var(--gray-gradient)) no-repeat;color:rgb(var(--gray));text-align:center}.social-links[data-astro-cid-sz7xmlte]{display:flex;justify-content:center;gap:1em;margin-top:1em}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]{text-decoration:none;color:rgb(var(--gray))}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]:hover{color:rgb(var(--gray-dark))}
+main[data-astro-cid-dxom2xcl]{width:calc(100% - 2em);max-width:100%;margin:0}.hero-image[data-astro-cid-dxom2xcl]{width:100%}.hero-image[data-astro-cid-dxom2xcl] img[data-astro-cid-dxom2xcl]{display:block;margin:0 auto;border-radius:12px;box-shadow:var(--box-shadow)}.prose[data-astro-cid-dxom2xcl]{width:75%;max-width:calc(100% - 2em);margin:auto;padding:1em;color:rgb(var(--gray-dark))}.title[data-astro-cid-dxom2xcl]{margin-bottom:1em;padding:1em 0;text-align:center;line-height:1}.title[data-astro-cid-dxom2xcl] h1[data-astro-cid-dxom2xcl]{margin:0 0 .5em}.date[data-astro-cid-dxom2xcl]{margin-bottom:.5em;color:rgb(var(--gray))}.last-updated-on[data-astro-cid-dxom2xcl]{font-style:italic}
+</style></head> <body data-astro-cid-dxom2xcl> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <a href="/" style="padding: 1rem 0 0 0;" data-astro-cid-3ef6ksr2> <img src="/new_tower_logo.png" alt="Tower of Hanoi Logo" width="50rem" height="50rem" style="border-radius: 0;" data-astro-cid-3ef6ksr2> </a> <div class="internal-links" data-astro-cid-3ef6ksr2> <a href="/" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Home </a>  <a href="/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Blogposts </a>  <a href="/writeups" class="active" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Writeups </a>  <a href="/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> About </a>  </div> <div class="social-links" data-astro-cid-3ef6ksr2> <a href="https://x.com/towerofhanoi" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Follow Tower of Hanoi on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-3ef6ksr2></path></svg> </a> <a href="https://github.com/towerofhanoi" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to Tower of Hanoi's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path></svg> </a> <a href="https://ctftime.org/team/300" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to Tower of Hanoi's CTF Time page</span> <svg viewBox="0 0 16 16" width="32" height="32" data-astro-cid-3ef6ksr2> <path fill="currentColor" d="M 0,0 H 16 V 16 H 0 L 4.7205698,7.7838485 Z" data-astro-cid-3ef6ksr2></path> </svg> </a> </div> </nav> </header>  <main data-astro-cid-dxom2xcl> <article data-astro-cid-dxom2xcl> <div class="hero-image" data-astro-cid-dxom2xcl> <img width="720" height="360" src="/writeup_images/polictf-2017.png" alt="" data-astro-cid-dxom2xcl> </div> <div class="prose" data-astro-cid-dxom2xcl> <div class="title" data-astro-cid-dxom2xcl> <div class="date" data-astro-cid-dxom2xcl> <time datetime="2017-07-08T10:00:00.000Z"> Jul 8, 2017 </time>  </div> <h1 data-astro-cid-dxom2xcl>PoliCTF 17 - Pasticciotto</h1> <h3 data-astro-cid-dxom2xcl> by Giulio &quot;peperunas&quot; De Pasquale</h3> <hr data-astro-cid-dxom2xcl> </div>  <blockquote>
+<p>We found this executable and we think it must have something in common with the baddies’ infrastructure.
+We would be glad to understand what <strong><code>data</code></strong> they are hiding from us…</p>
+</blockquote>
+<h2 id="did-you-know-thatthe-challenge-is-open-source">Did you know that…the challenge is open source?</h2>
+<p>You can find all the mess in… <a href="https://github.com/peperunas/pasticciotto">HERE</a>!</p>
+<h2 id="what-does-the-server-say">What does the server say?</h2>
+<p>When the connection to the server is instantiated, the server sends the <strong>opcode key</strong> used by the remote Pasticciotto VM. The next step is to send some valid bytecode to be executed remotely. But… what?</p>
+<h2 id="to-the-client-and-beyond">To the client and beyond!</h2>
+<p>The client provided to the partecipants is just the Pasticciotto VM running the following <em>pastembly (cool name)</em> code:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>def datastrlen:</span></span>
+<span class="line"><span>###############</span></span>
+<span class="line"><span># r0 = offset of str in data</span></span>
+<span class="line"><span># retval (r0) = strlen</span></span>
+<span class="line"><span>###############</span></span>
+<span class="line"><span>push r1</span></span>
+<span class="line"><span>push r2</span></span>
+<span class="line"><span>push r3</span></span>
+<span class="line"><span>movr s2, r0</span></span>
+<span class="line"><span>movi s1, 0</span></span>
+<span class="line"><span>lodr s0, s2</span></span>
+<span class="line"><span>cmpb s0, 0</span></span>
+<span class="line"><span>jpei exit</span></span>
+<span class="line"><span>loop:</span></span>
+<span class="line"><span>movi s2, 0</span></span>
+<span class="line"><span>addi s1, 1</span></span>
+<span class="line"><span>addr s2, s1</span></span>
+<span class="line"><span>lodr s0, s2</span></span>
+<span class="line"><span>cmpb s0, 0</span></span>
+<span class="line"><span>jpni loop</span></span>
+<span class="line"><span>exit:</span></span>
+<span class="line"><span>movr r0, s1</span></span>
+<span class="line"><span>poop r3</span></span>
+<span class="line"><span>poop r2</span></span>
+<span class="line"><span>poop r1</span></span>
+<span class="line"><span>retn</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>def round: # round(uint16_t text[2])</span></span>
+<span class="line"><span>#################</span></span>
+<span class="line"><span># r0 = offset of text[0] in data</span></span>
+<span class="line"><span># r1 = offset of text[1] in data</span></span>
+<span class="line"><span># r2 = text[0]</span></span>
+<span class="line"><span># r3 = text[1]</span></span>
+<span class="line"><span># retval = void</span></span>
+<span class="line"><span>################</span></span>
+<span class="line"><span>push r1</span></span>
+<span class="line"><span>push r2</span></span>
+<span class="line"><span>push r3</span></span>
+<span class="line"><span>lodr r2, r0 # text[0]</span></span>
+<span class="line"><span>lodr r3, r1 # text[1]</span></span>
+<span class="line"><span>movi s0, 0 # i</span></span>
+<span class="line"><span>movi s1, 0 # sum</span></span>
+<span class="line"><span>loop:</span></span>
+<span class="line"><span>push s0 # saving i</span></span>
+<span class="line"><span>addi s1, 0x626f # sum += delta</span></span>
+<span class="line"><span>push s1 # saving sum</span></span>
+<span class="line"><span># s0 and s1 will be used as tmps</span></span>
+<span class="line"><span>#########</span></span>
+<span class="line"><span># calc v0</span></span>
+<span class="line"><span>#########</span></span>
+<span class="line"><span>movr s0, r3</span></span>
+<span class="line"><span>shli s0, 4</span></span>
+<span class="line"><span>addi s0, 0x7065 # s0 = (text[1] &#x3C;&#x3C; 4) + k0</span></span>
+<span class="line"><span>movr s1, r3</span></span>
+<span class="line"><span>poop s3 # restoring sum in s3</span></span>
+<span class="line"><span>#addr s1, s3 # s1 = text[1] + sum</span></span>
+<span class="line"><span>push s3 # saving sum again</span></span>
+<span class="line"><span>xorr s0, s1 # s0 = ((text[1] &#x3C;&#x3C; 4) + k0) ^ (text[1] + sum)</span></span>
+<span class="line"><span>push s0</span></span>
+<span class="line"><span>movr s0, r3</span></span>
+<span class="line"><span>shri s0, 5</span></span>
+<span class="line"><span>addi s0, 0x7065 # s0 = (text[1] >> 5) + k1</span></span>
+<span class="line"><span>poop s1</span></span>
+<span class="line"><span>xorr s0, s1 # s0 = ((text[1] &#x3C;&#x3C; 4) + k0) ^ (text[1] + sum) ^ ((text[1] >> 5) + k1)</span></span>
+<span class="line"><span>addr r2, s0 # r2 += s0</span></span>
+<span class="line"><span>#########</span></span>
+<span class="line"><span># calc v1</span></span>
+<span class="line"><span>#########</span></span>
+<span class="line"><span>movr s0, r2</span></span>
+<span class="line"><span>shli s0, 4</span></span>
+<span class="line"><span>addi s0, 0x7275 # s0 = (text[0] &#x3C;&#x3C; 4) + k2</span></span>
+<span class="line"><span>movr s1, r2</span></span>
+<span class="line"><span>poop s3 # restoring sum in s3</span></span>
+<span class="line"><span>#addr s1, s3 # s1 = text[0] + sum</span></span>
+<span class="line"><span>push s3 # saving sum again</span></span>
+<span class="line"><span>xorr s0, s1 # s0 = ((text[0] &#x3C;&#x3C; 4) + k2) ^ (text[0] + sum)</span></span>
+<span class="line"><span>push s0</span></span>
+<span class="line"><span>movr s0, r2</span></span>
+<span class="line"><span>shri s0, 5</span></span>
+<span class="line"><span>addi s0, 0x6e73 # s0 = (text[0] >> 5) + k3</span></span>
+<span class="line"><span>poop s1</span></span>
+<span class="line"><span>xorr s0, s1 # s0 = ((text[0] &#x3C;&#x3C; 4) + k2) ^ (text[0] + sum) ^ ((text[0] >> 5) + k3)</span></span>
+<span class="line"><span>addr r3, s0 # r3 += s0</span></span>
+<span class="line"><span>######</span></span>
+<span class="line"><span># end loop</span></span>
+<span class="line"><span>#####</span></span>
+<span class="line"><span>poop s1 # restoring sum</span></span>
+<span class="line"><span>poop s0 # restoring i</span></span>
+<span class="line"><span>addi s0, 1</span></span>
+<span class="line"><span>cmpb s0, 127 # while (i &#x3C; 128)</span></span>
+<span class="line"><span>jpbi loop</span></span>
+<span class="line"><span># saving the values</span></span>
+<span class="line"><span>strr r0, r2</span></span>
+<span class="line"><span>strr r1, r3</span></span>
+<span class="line"><span>poop r3</span></span>
+<span class="line"><span>poop r2</span></span>
+<span class="line"><span>poop r1</span></span>
+<span class="line"><span>retn</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>def main:</span></span>
+<span class="line"><span>grmn</span></span>
+<span class="line"><span>movi r0, 0xadde</span></span>
+<span class="line"><span>movi r1, 0x0bb0</span></span>
+<span class="line"><span>stri 0, r0</span></span>
+<span class="line"><span>stri 2, r1</span></span>
+<span class="line"><span>movi r0, 0x0bb0</span></span>
+<span class="line"><span>movi r1, 0xcefa</span></span>
+<span class="line"><span>stri 0x4, r0</span></span>
+<span class="line"><span>stri 0x6, r1</span></span>
+<span class="line"><span>movi r0, 0</span></span>
+<span class="line"><span>call datastrlen</span></span>
+<span class="line"><span>movr r2, r0</span></span>
+<span class="line"><span>movi s0, 0</span></span>
+<span class="line"><span>encrypt:</span></span>
+<span class="line"><span>push s0</span></span>
+<span class="line"><span>movi r0, 0</span></span>
+<span class="line"><span>movi r1, 2</span></span>
+<span class="line"><span>addr r0, s0</span></span>
+<span class="line"><span>addr r1, s0</span></span>
+<span class="line"><span>call round</span></span>
+<span class="line"><span>poop s0</span></span>
+<span class="line"><span>addi s0, 4</span></span>
+<span class="line"><span>cmpr s0, r2</span></span>
+<span class="line"><span>jpbi encrypt</span></span>
+<span class="line"><span>lodi r0, 0</span></span>
+<span class="line"><span>lodi r1, 2</span></span>
+<span class="line"><span>lodi r2, 4</span></span>
+<span class="line"><span>lodi r3, 6</span></span>
+<span class="line"><span>shit</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Once the VM bytecode is reversed, the partecipant has the knowledge to <strong>decrypt the server’s VM data section</strong> using the same algorithm shown above.
+This has to be assembled through a program or a script (check out <a href="https://github.com/peperunas/pasticciotto/blob/master/assembler/assembler.py"><code>assembler.py</code></a>) due to the <strong>opcodes key</strong> changing each time the partecipant connected to the server.</p>
+<p>Here is an example of a working decryption algorithm:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>def datastrlen:</span></span>
+<span class="line"><span>###############</span></span>
+<span class="line"><span># r0 = offset of str in data</span></span>
+<span class="line"><span># retval (r0) = strlen</span></span>
+<span class="line"><span>###############</span></span>
+<span class="line"><span>push r1</span></span>
+<span class="line"><span>push r2</span></span>
+<span class="line"><span>push r3</span></span>
+<span class="line"><span>movr s2, r0</span></span>
+<span class="line"><span>movi s1, 0</span></span>
+<span class="line"><span>lodr s0, s2</span></span>
+<span class="line"><span>cmpb s0, 0</span></span>
+<span class="line"><span>jpei exit</span></span>
+<span class="line"><span>loop:</span></span>
+<span class="line"><span>movi s2, 0</span></span>
+<span class="line"><span>addi s1, 1</span></span>
+<span class="line"><span>addr s2, s1</span></span>
+<span class="line"><span>lodr s0, s2</span></span>
+<span class="line"><span>cmpb s0, 0</span></span>
+<span class="line"><span>jpni loop</span></span>
+<span class="line"><span>exit:</span></span>
+<span class="line"><span>movr r0, s1</span></span>
+<span class="line"><span>poop r3</span></span>
+<span class="line"><span>poop r2</span></span>
+<span class="line"><span>poop r1</span></span>
+<span class="line"><span>retn</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>def round: # round(uint16_t text[2])</span></span>
+<span class="line"><span>#################</span></span>
+<span class="line"><span># r0 = offset of text[0] in data</span></span>
+<span class="line"><span># r1 = offset of text[1] in data</span></span>
+<span class="line"><span># r2 = text[0]</span></span>
+<span class="line"><span># r3 = text[1]</span></span>
+<span class="line"><span># retval = void</span></span>
+<span class="line"><span>################</span></span>
+<span class="line"><span>push r1</span></span>
+<span class="line"><span>push r2</span></span>
+<span class="line"><span>push r3</span></span>
+<span class="line"><span>lodr r2, r0 # text[0]</span></span>
+<span class="line"><span>lodr r3, r1 # text[1]</span></span>
+<span class="line"><span>movi s0, 0 # i</span></span>
+<span class="line"><span>movi s1, 0 # sum</span></span>
+<span class="line"><span>loop:</span></span>
+<span class="line"><span>push s0 # saving i</span></span>
+<span class="line"><span># s0 and s1 will be used as tmps</span></span>
+<span class="line"><span>#########</span></span>
+<span class="line"><span># calc v1</span></span>
+<span class="line"><span>#########</span></span>
+<span class="line"><span>movr s0, r2</span></span>
+<span class="line"><span>shli s0, 4</span></span>
+<span class="line"><span>addi s0, 0x7275 # s0 = (text[0] &#x3C;&#x3C; 4) + k2</span></span>
+<span class="line"><span>movr s1, r2</span></span>
+<span class="line"><span>xorr s0, s1 # s0 = ((text[0] &#x3C;&#x3C; 4) + k2) ^ text[0]</span></span>
+<span class="line"><span>push s0</span></span>
+<span class="line"><span>movr s0, r2</span></span>
+<span class="line"><span>shri s0, 5</span></span>
+<span class="line"><span>addi s0, 0x6e73 # s0 = (text[0] >> 5) + k3</span></span>
+<span class="line"><span>poop s1</span></span>
+<span class="line"><span>xorr s0, s1 # s0 = ((text[0] &#x3C;&#x3C; 4) + k2) ^ text[0] ^ ((text[0] >> 5) + k3)</span></span>
+<span class="line"><span>subr r3, s0 # r3 -= s0</span></span>
+<span class="line"><span>#########</span></span>
+<span class="line"><span># calc v0</span></span>
+<span class="line"><span>#########</span></span>
+<span class="line"><span>movr s0, r3</span></span>
+<span class="line"><span>shli s0, 4</span></span>
+<span class="line"><span>addi s0, 0x7065 # s0 = (text[1] &#x3C;&#x3C; 4) + k0</span></span>
+<span class="line"><span>movr s1, r3</span></span>
+<span class="line"><span>xorr s0, s1 # s0 = ((text[1] &#x3C;&#x3C; 4) + k0) ^ text[1]</span></span>
+<span class="line"><span>push s0</span></span>
+<span class="line"><span>movr s0, r3</span></span>
+<span class="line"><span>shri s0, 5</span></span>
+<span class="line"><span>addi s0, 0x7065 # s0 = (text[1] >> 5) + k1</span></span>
+<span class="line"><span>poop s1</span></span>
+<span class="line"><span>xorr s0, s1 # s0 = ((text[1] &#x3C;&#x3C; 4) + k0) ^ text[1] ^ ((text[1] >> 5) + k1)</span></span>
+<span class="line"><span>subr r2, s0 # r2 -= s0</span></span>
+<span class="line"><span>######</span></span>
+<span class="line"><span># end loop</span></span>
+<span class="line"><span>#####</span></span>
+<span class="line"><span>poop s0 # restoring i</span></span>
+<span class="line"><span>addi s0, 1</span></span>
+<span class="line"><span>cmpb s0, 127 # while (i &#x3C; 128)</span></span>
+<span class="line"><span>jpbi loop</span></span>
+<span class="line"><span># saving the values</span></span>
+<span class="line"><span>strr r0, r2</span></span>
+<span class="line"><span>strr r1, r3</span></span>
+<span class="line"><span>poop r3</span></span>
+<span class="line"><span>poop r2</span></span>
+<span class="line"><span>poop r1</span></span>
+<span class="line"><span>retn</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>def main:</span></span>
+<span class="line"><span>movi r0, 0</span></span>
+<span class="line"><span>call datastrlen</span></span>
+<span class="line"><span>movr r2, r0</span></span>
+<span class="line"><span>movi s0, 0</span></span>
+<span class="line"><span>decrypt:</span></span>
+<span class="line"><span>push s0</span></span>
+<span class="line"><span>movi r0, 0</span></span>
+<span class="line"><span>movi r1, 2</span></span>
+<span class="line"><span>addr r0, s0</span></span>
+<span class="line"><span>addr r1, s0</span></span>
+<span class="line"><span>call round</span></span>
+<span class="line"><span>poop s0</span></span>
+<span class="line"><span>addi s0, 4</span></span>
+<span class="line"><span>cmpr s0, r2</span></span>
+<span class="line"><span>jpbi decrypt</span></span>
+<span class="line"><span>shit</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Finally, this is a sample python wrapper that can be used to solve the challenge:</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#4D9375">from</span><span style="color:#DBD7CAEE"> pwn </span><span style="color:#4D9375">import</span><span style="color:#CB7676"> *</span></span>
+<span class="line"><span style="color:#4D9375">import</span><span style="color:#DBD7CAEE"> subprocess</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">key_re </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> re</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">compile</span><span style="color:#666666">(</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">.*</span><span style="color:#C99076">\"</span><span style="color:#C98A7D">(.*)</span><span style="color:#C99076">\"</span><span style="color:#C98A7D">.*</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">r </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> remote</span><span style="color:#666666">(</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">pasticciotto.chall.polictf.it</span><span style="color:#C98A7D77">"</span><span style="color:#666666">,</span><span style="color:#4C9A91"> 31337</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">first </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">recv</span><span style="color:#666666">()</span></span>
+<span class="line"><span style="color:#DBD7CAEE">key </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> key_re</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">match</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">first</span><span style="color:#666666">).</span><span style="color:#DBD7CAEE">group</span><span style="color:#666666">(</span><span style="color:#4C9A91">1</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#B8A965">print</span><span style="color:#666666">(</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">Using key: </span><span style="color:#C99076">{}</span><span style="color:#C98A7D77">"</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">format</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">key</span><span style="color:#666666">))</span></span>
+<span class="line"><span style="color:#DBD7CAEE">subprocess</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">check_call</span><span style="color:#666666">([</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">python3</span><span style="color:#C98A7D77">"</span><span style="color:#666666">,</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">../../assembler/assembler.py</span><span style="color:#C98A7D77">"</span><span style="color:#666666">,</span><span style="color:#C98A7D77"> "</span><span style="color:#C99076">{}</span><span style="color:#C98A7D77">"</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">format</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">key</span><span style="color:#666666">),</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">../asms/decrypt.pstc</span><span style="color:#C98A7D77">"</span><span style="color:#666666">,</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">./out.pasticciotto</span><span style="color:#C98A7D77">"</span><span style="color:#666666">])</span></span>
+<span class="line"><span style="color:#4D9375">with</span><span style="color:#B8A965"> open</span><span style="color:#666666">(</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">./out.pasticciotto</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span><span style="color:#4D9375"> as</span><span style="color:#DBD7CAEE"> f</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    data </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> f</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">read</span><span style="color:#666666">()</span></span>
+<span class="line"><span style="color:#DBD7CAEE">r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">send</span><span style="color:#666666">(</span><span style="color:#C98A7D77">"</span><span style="color:#C99076">{}\n</span><span style="color:#C98A7D77">"</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">format</span><span style="color:#666666">(</span><span style="color:#B8A965">len</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">data</span><span style="color:#666666">)))</span></span>
+<span class="line"><span style="color:#B8A965">print</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">recv</span><span style="color:#666666">())</span></span>
+<span class="line"><span style="color:#DBD7CAEE">r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">send</span><span style="color:#666666">(</span><span style="color:#C98A7D77">"</span><span style="color:#C99076">{}\n</span><span style="color:#C98A7D77">"</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">format</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">data</span><span style="color:#666666">))</span></span>
+<span class="line"><span style="color:#B8A965">print</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">r</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">recv</span><span style="color:#666666">(</span><span style="color:#4C9A91">100000</span><span style="color:#666666">))</span></span>
+<span class="line"></span></code></pre>
+<h2 id="challenge-output">Challenge output</h2>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$ python ./exploit-test.py</span></span>
+<span class="line"><span>[+] Opening connection to pasticciotto.chall.polictf.it on port 31337: Done</span></span>
+<span class="line"><span>Using key: 9XM6SvFPvN8qiLi</span></span>
+<span class="line"><span>movi : 0x0->0x39</span></span>
+<span class="line"><span>movr : 0x1->0x20</span></span>
+<span class="line"><span>lodi : 0x2->0x9a</span></span>
+<span class="line"><span>lodr : 0x3->0x1d</span></span>
+<span class="line"><span>stri : 0x4->0xa9</span></span>
+<span class="line"><span>strr : 0x5->0xd2</span></span>
+<span class="line"><span>addi : 0x6->0x38</span></span>
+<span class="line"><span>addr : 0x7->0x8f</span></span>
+<span class="line"><span>subi : 0x8->0xd</span></span>
+<span class="line"><span>subr : 0x9->0x64</span></span>
+<span class="line"><span>andb : 0xa->0xa6</span></span>
+<span class="line"><span>andw : 0xb->0x22</span></span>
+<span class="line"><span>andr : 0xc->0x97</span></span>
+<span class="line"><span>yorb : 0xd->0xda</span></span>
+<span class="line"><span>yorw : 0xe->0x51</span></span>
+<span class="line"><span>yorr : 0xf->0x48</span></span>
+<span class="line"><span>xorb : 0x10->0x12</span></span>
+<span class="line"><span>xorw : 0x11->0x70</span></span>
+<span class="line"><span>xorr : 0x12->0xb6</span></span>
+<span class="line"><span>notr : 0x13->0x37</span></span>
+<span class="line"><span>muli : 0x14->0xa5</span></span>
+<span class="line"><span>mulr : 0x15->0xc</span></span>
+<span class="line"><span>divi : 0x16->0xd5</span></span>
+<span class="line"><span>divr : 0x17->0xf4</span></span>
+<span class="line"><span>shli : 0x18->0xdc</span></span>
+<span class="line"><span>shlr : 0x19->0xc3</span></span>
+<span class="line"><span>shri : 0x1a->0x6e</span></span>
+<span class="line"><span>shrr : 0x1b->0xb5</span></span>
+<span class="line"><span>push : 0x1c->0xe1</span></span>
+<span class="line"><span>poop : 0x1d->0x88</span></span>
+<span class="line"><span>cmpb : 0x1e->0x2c</span></span>
+<span class="line"><span>cmpw : 0x1f->0x3a</span></span>
+<span class="line"><span>cmpr : 0x20->0x35</span></span>
+<span class="line"><span>jmpi : 0x21->0xbb</span></span>
+<span class="line"><span>jmpr : 0x22->0x52</span></span>
+<span class="line"><span>jpai : 0x23->0x4f</span></span>
+<span class="line"><span>jpar : 0x24->0x90</span></span>
+<span class="line"><span>jpbi : 0x25->0xd4</span></span>
+<span class="line"><span>jpbr : 0x26->0x11</span></span>
+<span class="line"><span>jpei : 0x27->0xe5</span></span>
+<span class="line"><span>jper : 0x28->0x45</span></span>
+<span class="line"><span>jpni : 0x29->0xbc</span></span>
+<span class="line"><span>jpnr : 0x2a->0xbe</span></span>
+<span class="line"><span>call : 0x2b->0x32</span></span>
+<span class="line"><span>retn : 0x2c->0x7e</span></span>
+<span class="line"><span>shit : 0x2d->0x6d</span></span>
+<span class="line"><span>nope : 0x2e->0x6a</span></span>
+<span class="line"><span>grmn : 0x2f->0xe6</span></span>
+<span class="line"><span>FUNCTION main</span></span>
+<span class="line"><span>0x0:	movi r0, 0</span></span>
+<span class="line"><span>0x4:	call datastrlen</span></span>
+<span class="line"><span>0x7:	movr r2, r0</span></span>
+<span class="line"><span>0x9:	movi s0, 0</span></span>
+<span class="line"><span>0xd:	push s0</span></span>
+<span class="line"><span>0xf:	movi r0, 0</span></span>
+<span class="line"><span>0x13:	movi r1, 2</span></span>
+<span class="line"><span>0x17:	addr r0, s0</span></span>
+<span class="line"><span>0x19:	addr r1, s0</span></span>
+<span class="line"><span>0x1b:	call round</span></span>
+<span class="line"><span>0x1e:	poop s0</span></span>
+<span class="line"><span>0x20:	addi s0, 4</span></span>
+<span class="line"><span>0x24:	cmpr s0, r2</span></span>
+<span class="line"><span>0x26:	jpbi decrypt</span></span>
+<span class="line"><span>0x29:	shit </span></span>
+<span class="line"><span>FUNCTION round</span></span>
+<span class="line"><span>0x2a:	push r1</span></span>
+<span class="line"><span>0x2c:	push r2</span></span>
+<span class="line"><span>0x2e:	push r3</span></span>
+<span class="line"><span>0x30:	lodr r2, r0</span></span>
+<span class="line"><span>0x32:	lodr r3, r1</span></span>
+<span class="line"><span>0x34:	movi s0, 0</span></span>
+<span class="line"><span>0x38:	movi s1, 0</span></span>
+<span class="line"><span>0x3c:	push s0</span></span>
+<span class="line"><span>0x3e:	movr s0, r2</span></span>
+<span class="line"><span>0x40:	shli s0, 4</span></span>
+<span class="line"><span>0x44:	addi s0, 0x7275</span></span>
+<span class="line"><span>0x48:	movr s1, r2</span></span>
+<span class="line"><span>0x4a:	xorr s0, s1</span></span>
+<span class="line"><span>0x4c:	push s0</span></span>
+<span class="line"><span>0x4e:	movr s0, r2</span></span>
+<span class="line"><span>0x50:	shri s0, 5</span></span>
+<span class="line"><span>0x54:	addi s0, 0x6e73</span></span>
+<span class="line"><span>0x58:	poop s1</span></span>
+<span class="line"><span>0x5a:	xorr s0, s1</span></span>
+<span class="line"><span>0x5c:	subr r3, s0</span></span>
+<span class="line"><span>0x5e:	movr s0, r3</span></span>
+<span class="line"><span>0x60:	shli s0, 4</span></span>
+<span class="line"><span>0x64:	addi s0, 0x7065</span></span>
+<span class="line"><span>0x68:	movr s1, r3</span></span>
+<span class="line"><span>0x6a:	xorr s0, s1</span></span>
+<span class="line"><span>0x6c:	push s0</span></span>
+<span class="line"><span>0x6e:	movr s0, r3</span></span>
+<span class="line"><span>0x70:	shri s0, 5</span></span>
+<span class="line"><span>0x74:	addi s0, 0x7065</span></span>
+<span class="line"><span>0x78:	poop s1</span></span>
+<span class="line"><span>0x7a:	xorr s0, s1</span></span>
+<span class="line"><span>0x7c:	subr r2, s0</span></span>
+<span class="line"><span>0x7e:	poop s0</span></span>
+<span class="line"><span>0x80:	addi s0, 1</span></span>
+<span class="line"><span>0x84:	cmpb s0, 127</span></span>
+<span class="line"><span>0x87:	jpbi loop</span></span>
+<span class="line"><span>0x8a:	strr r0, r2</span></span>
+<span class="line"><span>0x8c:	strr r1, r3</span></span>
+<span class="line"><span>0x8e:	poop r3</span></span>
+<span class="line"><span>0x90:	poop r2</span></span>
+<span class="line"><span>0x92:	poop r1</span></span>
+<span class="line"><span>0x94:	retn </span></span>
+<span class="line"><span>FUNCTION datastrlen</span></span>
+<span class="line"><span>0x95:	push r1</span></span>
+<span class="line"><span>0x97:	push r2</span></span>
+<span class="line"><span>0x99:	push r3</span></span>
+<span class="line"><span>0x9b:	movr s2, r0</span></span>
+<span class="line"><span>0x9d:	movi s1, 0</span></span>
+<span class="line"><span>0xa1:	lodr s0, s2</span></span>
+<span class="line"><span>0xa3:	cmpb s0, 0</span></span>
+<span class="line"><span>0xa6:	jpei exit</span></span>
+<span class="line"><span>0xa9:	movi s2, 0</span></span>
+<span class="line"><span>0xad:	addi s1, 1</span></span>
+<span class="line"><span>0xb1:	addr s2, s1</span></span>
+<span class="line"><span>0xb3:	lodr s0, s2</span></span>
+<span class="line"><span>0xb5:	cmpb s0, 0</span></span>
+<span class="line"><span>0xb8:	jpni loop</span></span>
+<span class="line"><span>0xbb:	movr r0, s1</span></span>
+<span class="line"><span>0xbd:	poop r3</span></span>
+<span class="line"><span>0xbf:	poop r2</span></span>
+<span class="line"><span>0xc1:	poop r1</span></span>
+<span class="line"><span>0xc3:	retn </span></span>
+<span class="line"><span>[main: size 0x2a, offset 0x0, round: size 0x6b, offset 0x2a, datastrlen: size 0x2f, offset 0x95]</span></span>
+<span class="line"><span>Go ahead then!</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Congratulations!</span></span>
+<span class="line"><span>The flag is: flag{m4nc14t1b1_stu_bellu_p4sticci0tt0}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[*] Closed connection to pasticciotto.chall.polictf.it port 31337</span></span>
+<span class="line"><span></span></span></code></pre>  </div> </article> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2024 Tower of Hanoi. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://twitter.com/towerofhanoi" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Follow Tower of Hanoi on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/twitter" data-astro-cid-sz7xmlte><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://github.com/towerofhanoi" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Tower of Haoi's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://ctftime.org/team/300" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Tower of Hanoi's CTF Time page</span> <svg viewBox="0 0 16 16" width="32" height="32" data-astro-cid-sz7xmlte> <path fill="currentColor" d="M 0,0 H 16 V 16 H 0 L 4.7205698,7.7838485 Z" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </footer>  </body></html>
