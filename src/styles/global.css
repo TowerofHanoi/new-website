@@ -7,6 +7,7 @@
 :root {
 	--accent: #fea819;
 	--accent-dark: #ac7010;
+	--accent-dark-010: #ac70100a;
 }
 @font-face {
 	font-family: 'Atkinson';
@@ -33,7 +34,7 @@ body {
 	overflow-wrap: break-word;
 	color: #aaaaaa;
 	font-size: 20px;
-	line-height: 1.7;
+	line-height: 1.25;
 }
 main {
 	width: 720px;
@@ -47,7 +48,7 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 0 0 0.5rem 0;
+	margin: 1em 0 0.5rem 0;
 	color: #ffffff;
 	line-height: 1.2;
 }
@@ -79,9 +80,6 @@ a:hover {
 p {
 	margin-bottom: 1em;
 }
-.prose p {
-	margin-bottom: 2em;
-}
 textarea {
 	width: 100%;
 	font-size: 16px;
@@ -98,23 +96,24 @@ img {
 	border-radius: 8px;
 }
 code {
-	padding: 2px 5px;
+	padding: 0 0.3em;
 	background-color: #1f1f1f;
-	border-radius: 2px;
+	border-radius: 0.2em;
+	font-size: 0.8em;
 }
 pre {
-	padding: 1.5em;
-	border-radius: 8px;
+	padding: 1em;
+	border-radius: 0.2em;
 }
 pre > code {
 	all: unset;
-	font-size: 0.9em;
+	font-size: 0.8em;
 }
 blockquote {
 	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
+	padding: 0.01em 0 0.01em 1em;
 	margin: 0px;
-	font-size: 1.333em;
+	background-color: var(--accent-dark-010);
 }
 hr {
 	border: none;
