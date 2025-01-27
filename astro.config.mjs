@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import { remarkAlert } from "remark-github-blockquote-alert";
 
 import sitemap from '@astrojs/sitemap';
 
@@ -12,5 +13,6 @@ export default defineConfig({
 		shikiConfig: {
 		  theme: 'vitesse-dark',
 		},
+		remarkPlugins: [remarkAlert],
 	  },
 });

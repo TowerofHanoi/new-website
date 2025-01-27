@@ -364,6 +364,13 @@ declare module 'astro:content' {
   collection: "writeups";
   data: InferEntrySchema<"writeups">
 } & { render(): Render[".md"] };
+"2024-11-10-HKCERT-QUALS-Black-magic.md": {
+	id: "2024-11-10-HKCERT-QUALS-Black-magic.md";
+  slug: "2024-11-10-hkcert-quals-black-magic";
+  body: string;
+  collection: "writeups";
+  data: InferEntrySchema<"writeups">
+} & { render(): Render[".md"] };
 };
 
 	};
