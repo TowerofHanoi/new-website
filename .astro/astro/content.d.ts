@@ -371,6 +371,13 @@ declare module 'astro:content' {
   collection: "writeups";
   data: InferEntrySchema<"writeups">
 } & { render(): Render[".md"] };
+"2025-03-14-sudo-kurl.md": {
+	id: "2025-03-14-sudo-kurl.md";
+  slug: "2025-03-14-sudo-kurl";
+  body: string;
+  collection: "writeups";
+  data: InferEntrySchema<"writeups">
+} & { render(): Render[".md"] };
 };
 
 	};
