@@ -166,6 +166,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"2025-06-27-toh-ctf-25.md": {
+	id: "2025-06-27-toh-ctf-25.md";
+  slug: "2025-06-27-toh-ctf-25";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 };
 "writeups": {
 "2015-06-12-PNG_Uncorrupt.md": {
