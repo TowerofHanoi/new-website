@@ -173,6 +173,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"2025-07-20-forsaken-tower-deployment.md": {
+	id: "2025-07-20-forsaken-tower-deployment.md";
+  slug: "2025-07-20-forsaken-tower-deployment";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 };
 "writeups": {
 "2015-06-12-PNG_Uncorrupt.md": {
@@ -381,6 +388,27 @@ declare module 'astro:content' {
 "2025-03-14-sudo-kurl.md": {
 	id: "2025-03-14-sudo-kurl.md";
   slug: "2025-03-14-sudo-kurl";
+  body: string;
+  collection: "writeups";
+  data: InferEntrySchema<"writeups">
+} & { render(): Render[".md"] };
+"2025-07-20-forsaken-tower.md": {
+	id: "2025-07-20-forsaken-tower.md";
+  slug: "2025-07-20-forsaken-tower";
+  body: string;
+  collection: "writeups";
+  data: InferEntrySchema<"writeups">
+} & { render(): Render[".md"] };
+"2025-07-20-look-at-the-time.md": {
+	id: "2025-07-20-look-at-the-time.md";
+  slug: "2025-07-20-look-at-the-time";
+  body: string;
+  collection: "writeups";
+  data: InferEntrySchema<"writeups">
+} & { render(): Render[".md"] };
+"2025-07-20-retro-mania.md": {
+	id: "2025-07-20-retro-mania.md";
+  slug: "2025-07-20-retro-mania";
   body: string;
   collection: "writeups";
   data: InferEntrySchema<"writeups">
