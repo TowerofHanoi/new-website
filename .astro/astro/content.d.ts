@@ -385,6 +385,13 @@ declare module 'astro:content' {
   collection: "writeups";
   data: InferEntrySchema<"writeups">
 } & { render(): Render[".md"] };
+"CVE-2025-1550.md": {
+	id: "CVE-2025-1550.md";
+  slug: "cve-2025-1550";
+  body: string;
+  collection: "writeups";
+  data: InferEntrySchema<"writeups">
+} & { render(): Render[".md"] };
 };
 
 	};
