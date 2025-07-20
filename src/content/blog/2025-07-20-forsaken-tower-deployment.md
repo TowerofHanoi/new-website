@@ -1,6 +1,7 @@
 ---
 title: 'How to Deploy a Wii Pwn Challenge'
 description: 'A detailed guide on deploying a remote pwn challenge for the Nintendo Wii using Dolphin Emulator and custom scripts.'
+author: danmaam
 pubDate: 'Jul 20 2025'
 heroImage: '/deployment-writeup-cover.webp'
 ---
