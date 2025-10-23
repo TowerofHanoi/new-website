@@ -13,6 +13,26 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 
+// Resolve image to an absolute URL for meta tags. If `image` is already
+// an http(s) URL leave it unchanged. If it starts with `/` and `Astro.site`
+// is configured, build a full URL using the site origin. Otherwise fall back
+// to the provided value.
+let imageURL = image;
+try {
+	if (!/^https?:\/\//i.test(String(image))) {
+		if (Astro.site) {
+			imageURL = new URL(String(image), Astro.site).toString();
+		} else if (typeof image === 'string' && image.startsWith('/')) {
+			// Astro.site isn't configured; keep the leading-slash path so it's still
+			// correct for relative use, but note it won't be an absolute URL.
+			imageURL = image;
+		}
+	}
+} catch (err) {
+	// If URL construction fails for any reason, fall back to the raw image.
+	imageURL = image;
+}
+
 ---
 
 <!-- Global Metadata -->
@@ -39,11 +59,11 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={image} />
+<meta property="og:image" content={imageURL} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={image} />
+<meta property="twitter:image" content={imageURL} />
